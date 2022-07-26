@@ -36,33 +36,36 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
 
         private void FastSearchButton_Click(object sender, RoutedEventArgs e)
         {
-            var codeLong = FastSearchText.Text;
-            if (string.IsNullOrWhiteSpace(codeLong))
+            Task.Run(() =>
             {
-                _logger.Log(this, "请输入搜索内容");
-                return;
-            }
-            var codeStr = FilePathUtility.GetCodeFromLongStr(codeLong);
-            if (codeStr is { } && int.TryParse(codeStr, out var code))
-            {
-                _logger.Log(this, $"查询代码：{codeStr}");
-                var info = _coreHandler.DB.Search(code);
-                if (info is { })
+                var codeLong = FastSearchText.Text;
+                if (string.IsNullOrWhiteSpace(codeLong))
                 {
-                    _logger.Log(this, $"数据库中存在此代码，类型为{TypeTypeInfo.GetTypeName(info.Type)}，级别为{LevelTypeInfo.GetLevelName(info.Level)}");
+                    _logger.Log(this, "请输入搜索内容");
+                    return;
+                }
+                var codeStr = FilePathUtility.GetCodeFromLongStr(codeLong);
+                if (codeStr is { } && int.TryParse(codeStr, out var code))
+                {
+                    _logger.Log(this, $"查询代码：{codeStr}");
+                    var info = _coreHandler.DB.Search(code);
+                    if (info is { })
+                    {
+                        _logger.Log(this, $"数据库中存在此代码，类型为{TypeTypeInfo.GetTypeName(info.Type)}，级别为{LevelTypeInfo.GetLevelName(info.Level)}");
+                    }
+                    else
+                    {
+                        _logger.Log(this, "没有搜索到结果");
+                    }
                 }
                 else
                 {
-                    _logger.Log(this, "没有搜索到结果");
+                    _logger.Log(this, "搜索内容不合法，无法检测到代码");
                 }
-            }
-            else
-            {
-                _logger.Log(this, "搜索内容不合法，无法检测到代码");
-            }
 
-            FastSearchText.Focus();
-            FastSearchText.SelectAll();
+                FastSearchText.Focus();
+                FastSearchText.SelectAll();
+            });
         }
     }
 }

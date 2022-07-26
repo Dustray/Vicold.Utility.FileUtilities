@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Vicold.Utility.FileUtilities.FCUtility.Core;
@@ -75,27 +76,33 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
 
         private void ExecuteButton_Click(object sender, RoutedEventArgs e)
         {
-            _logger.Log(this, $"执行过滤");
-            var lines = FileStrUtility.SplitLinks(BeforeText.Text);
-            if (lines is { })
+            Task.Run(() =>
             {
-                var result = _coreHandler.LinkDuplicateRemoval(lines);
-                var builder = new StringBuilder();
-                if (result is { })
+                _logger.Log(this, $"执行过滤");
+                var lines = FileStrUtility.SplitLinks(BeforeText.Text);
+                if (lines is { })
                 {
-                    foreach (var subPath in result)
+                    var result = _coreHandler.LinkDuplicateRemoval(lines);
+                    var builder = new StringBuilder();
+                    if (result is { })
                     {
-                        builder.AppendLine(subPath);
+                        foreach (var subPath in result)
+                        {
+                            builder.AppendLine(subPath);
+                        }
+                        _logger.Log(this, $"执行过滤完成，源文件记录数{lines.Count}条，过滤后记录数{result.Count}条，过滤掉{lines.Count - result.Count}数据");
                     }
-                    _logger.Log(this, $"执行过滤完成，源文件记录数{lines.Count}条，过滤后记录数{result.Count}条，过滤掉{lines.Count - result.Count}数据");
-                }
 
-                AfterText.Text = builder.ToString();
-            }
-            else
-            {
-                _logger.Log(this, $"执行过滤结束，源文件条目数为0。");
-            }
+                    Dispatcher.Invoke(() =>
+                    {
+                        AfterText.Text = builder.ToString();
+                    });
+                }
+                else
+                {
+                    _logger.Log(this, $"执行过滤结束，源文件条目数为0。");
+                }
+            });
         }
 
         private void SaveButton_Click(object sender, RoutedEventArgs e)

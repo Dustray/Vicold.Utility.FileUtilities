@@ -17,6 +17,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
         private Logger _logger;
         private DBDriver _dBDriver;
         private ConfigDriver _configDriver;
+        private bool _syncing = false;
 
         public CoreHandler(Logger logger)
         {
@@ -94,59 +95,69 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
         /// <summary>
         /// 同步数据库
         /// </summary>
-        public void SyncDatabase()
+        public Task SyncDatabase()
         {
-            _logger.Log("[DB]", "文件与数据库同步开始");
-            var config = _configDriver.GetConfig();
-
-            var count = 0;
-            // 遍历更新主路径
-            for (var i = LevelTypeInfo.MinTypeIndex; i <= LevelTypeInfo.MaxTypeIndex; i++)
+            if (_syncing)
             {
-                var level = LevelTypeInfo.GetType(i);
-
-                SearchMain(level, TypeType.Clean);
-                SearchMain(level, TypeType.CleanMask);
-                SearchMain(level, TypeType.Mosaic);
+                return Task.CompletedTask;
             }
 
-            _logger.Log("[DB]", $"已同步主资源库，共同步了{count}个文件");
-            count = 0;
-            // 遍历更新子路径
-            if (config.SubPaths is { })
+            return Task.Run(() =>
             {
-                foreach (var subPath in config.SubPaths)
+                _syncing = true;
+                _logger.Log("[DB]", "文件与数据库同步开始");
+                var config = _configDriver.GetConfig();
+
+                var count = 0;
+                // 遍历更新主路径
+                for (var i = LevelTypeInfo.MinTypeIndex; i <= LevelTypeInfo.MaxTypeIndex; i++)
                 {
-                    if (subPath is { })
+                    var level = LevelTypeInfo.GetType(i);
+
+                    SearchMain(level, TypeType.Clean);
+                    SearchMain(level, TypeType.CleanMask);
+                    SearchMain(level, TypeType.Mosaic);
+                }
+
+                _logger.Log("[DB]", $"已同步主资源库，共同步了{count}个文件");
+                count = 0;
+                // 遍历更新子路径
+                if (config.SubPaths is { })
+                {
+                    foreach (var subPath in config.SubPaths)
                     {
-                        SearchSub(subPath);
+                        if (subPath is { })
+                        {
+                            SearchSub(subPath);
+                        }
                     }
                 }
-            }
 
-            _logger.Log("[DB]", $"已同步临时资源库，共同步了{count}个文件");
+                _logger.Log("[DB]", $"已同步临时资源库，共同步了{count}个文件");
 
-            void SearchMain(LevelType levelType, TypeType typeType)
-            {
-                var codes = GetMainCodes(levelType, typeType);
-                if (codes is { })
+                void SearchMain(LevelType levelType, TypeType typeType)
                 {
-                    count += codes.Count();
-                    SearchAndSync(codes, levelType, typeType);
+                    var codes = GetMainCodes(levelType, typeType);
+                    if (codes is { })
+                    {
+                        count += codes.Count();
+                        SearchAndSync(codes, levelType, typeType);
+                    }
                 }
-            }
 
-            void SearchSub(string subPath)
-            {
-                var codes = GetSubCodes(subPath);
-                if (codes is { })
+                void SearchSub(string subPath)
                 {
-                    count += codes.Count();
-                    SearchAndSync(codes, LevelType.Unset, TypeType.Unknown);
+                    var codes = GetSubCodes(subPath);
+                    if (codes is { })
+                    {
+                        count += codes.Count();
+                        SearchAndSync(codes, LevelType.Unset, TypeType.Unknown);
+                    }
                 }
-            }
 
-            _logger.Log("[DB]", "文件与数据库同步结束");
+                _logger.Log("[DB]", "文件与数据库同步结束");
+                _syncing = false;
+            });
         }
 
         public void SearchAndSync(IEnumerable<int>? codes, LevelType levelType, TypeType typeType)

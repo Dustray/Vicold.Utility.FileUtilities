@@ -21,7 +21,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="主文件仓库路径" Margin="5" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBlock Text="主资源文件仓库路径" Margin="5" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Button Grid.Column="1" x:Name="MainPathButton" Content="浏览" Margin="5" Width="80" HorizontalAlignment="Right" Click="MainPathButton_Click"/>
         </Grid>
 
@@ -32,7 +32,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="主文件仓库路径" Margin="5" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBlock Text="临时资源文件仓库路径" Margin="5" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Button Grid.Column="1" x:Name="SubPathButton" Content="浏览" Margin="5" Width="80" HorizontalAlignment="Right" Click="SubPathButton_Click"/>
         </Grid>
 

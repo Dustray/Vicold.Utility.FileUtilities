@@ -5,33 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Vicold.Utility.FileUtilities.FCUtility"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1200" Closing="Window_Closing" WindowStartupLocation="CenterScreen">
+        Title="FC2-PPV Tool" Height="800" Width="1200" Closing="Window_Closing" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="1"/>
             <RowDefinition Height="300" MinHeight="300"/>
-            <RowDefinition Height="5"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition MinHeight="10"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" MinWidth="200"/>
-            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="200" MinWidth="200" MaxWidth="400"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition MinWidth="200"/>
-            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="400" MinWidth="100"/>
         </Grid.ColumnDefinitions>
-
-        <StackPanel Grid.Row="0" Grid.Column="0"  Orientation="Vertical">
+        <Border Grid.ColumnSpan="5" Height="1" Background="#eee"/>
+        <StackPanel Grid.Row="1" x:Name="NavButtonPanel" Grid.Column="0"  Orientation="Vertical" Background="#1007">
             <Button Style="{DynamicResource ManagerButtonStyle}" Click="SyncDBButton_Click"
                         ToolTip="从视频文件目录同步（导入并更新）数据库" Foreground="Green" HorizontalAlignment="Stretch" >
                 <StackPanel Orientation="Horizontal">
+                    <Border Width="3" />
                     <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE117;"  VerticalAlignment="Center" FontSize="16" Margin="5 0 5 0" />
                     <TextBlock Text="同步数据库" FontFamily="微软雅黑" Foreground="Black" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
-            <Border Height="2" Background="#eee" />
+            <Border Height="1" Background="#ddd" Margin="10 0"/>
             <Button x:Name="CodeSearch" Style="{DynamicResource ManagerButtonStyle}" Click="CodeSearch_Click"
                          ToolTip="代码查询" Foreground="Indigo" HorizontalAlignment="Stretch"  >
                 <StackPanel Orientation="Horizontal">
+                    <Border Width="3" Background="Indigo" Visibility="Hidden"/>
                     <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE11A;"  VerticalAlignment="Center" FontSize="16" Margin="5 0 5 0" />
                     <TextBlock Text="代码查询" FontFamily="微软雅黑" Foreground="Black" VerticalAlignment="Center"/>
                 </StackPanel>
@@ -39,6 +42,7 @@
             <Button x:Name="FilterLinkFile" Style="{DynamicResource ManagerButtonStyle}" Click="FilterLinkFile_Click"
                          ToolTip="链接过滤" Foreground="Blue" HorizontalAlignment="Stretch"  >
                 <StackPanel Orientation="Horizontal">
+                    <Border Width="3" Background="Blue" Visibility="Hidden"/>
                     <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE16E;"  VerticalAlignment="Center" FontSize="16" Margin="5 0 5 0" />
                     <TextBlock Text="链接过滤" FontFamily="微软雅黑" Foreground="Black" VerticalAlignment="Center"/>
                 </StackPanel>
@@ -46,6 +50,7 @@
             <Button x:Name="ImportToDB" Style="{DynamicResource ManagerButtonStyle}" Click="ImportToDB_Click"
                          ToolTip="链接导入" Foreground="Maroon" HorizontalAlignment="Stretch" >
                 <StackPanel Orientation="Horizontal">
+                    <Border Width="3" Background="Maroon" Visibility="Hidden"/>
                     <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE17C;"  VerticalAlignment="Center" FontSize="16" Margin="5 0 5 0" />
                     <TextBlock Text="链接导入" FontFamily="微软雅黑" Foreground="Black" VerticalAlignment="Center"/>
                 </StackPanel>
@@ -53,6 +58,7 @@
             <Button Style="{DynamicResource ManagerButtonStyle}"
                         ToolTip="格式化文件名" Foreground="LightSalmon" HorizontalAlignment="Stretch"  >
                 <StackPanel Orientation="Horizontal">
+                    <Border Width="3" Background="LightSalmon" Visibility="Hidden"/>
                     <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE13E;"  VerticalAlignment="Center" FontSize="16" Margin="5 0 5 0" />
                     <TextBlock Text="格式化文件名" FontFamily="微软雅黑" Foreground="Black"  VerticalAlignment="Center"/>
                 </StackPanel>
@@ -60,30 +66,31 @@
             <Button x:Name="EditVideoPath" Style="{DynamicResource ManagerButtonStyle}" Click="EditVideoPath_Click"
                         ToolTip="编辑视频路径" Foreground="OrangeRed" HorizontalAlignment="Stretch">
                 <StackPanel Orientation="Horizontal">
+                    <Border Width="3" Background="OrangeRed" Visibility="Hidden"/>
                     <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE104;"  VerticalAlignment="Center" FontSize="16" Margin="5 0 5 0" />
                     <TextBlock Text="编辑视频路径" FontFamily="微软雅黑" Foreground="Black"  VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
         </StackPanel>
 
-        <GridSplitter Grid.Row="1" Grid.Column="0"  Height="5" HorizontalAlignment="Stretch"/>
+        <GridSplitter Grid.Row="2" Grid.Column="0"  Height="2" HorizontalAlignment="Stretch" Background="#ccc"/>
 
-        <Grid Grid.Row="2" Grid.Column="0" >
+        <Grid Grid.Row="3" Grid.Column="0" Background="#1007" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="1"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <TextBlock Text="数据统计" Margin="10" FontSize="16" HorizontalAlignment="Center"/>
-            <Border Grid.Row="1" Height="1" Background="#eee" Margin="10 0" />
+            <Border Grid.Row="1" Height="1" Background="#ddd" Margin="10 0" />
             <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
                 <StackPanel Grid.Row="2" Grid.Column="0" x:Name="DBCountPanel" Orientation="Vertical" Margin="5"/>
             </ScrollViewer>
         </Grid>
 
-        <GridSplitter  Grid.Row="0" Grid.RowSpan="3" Grid.Column="1"  Width="5" HorizontalAlignment="Stretch"/>
+        <GridSplitter  Grid.Row="1" Grid.RowSpan="3" Grid.Column="1"  Width="5" HorizontalAlignment="Stretch" Background="#ccc"/>
 
-        <Grid Grid.Row="0" Grid.RowSpan="3" Grid.Column="2">
+        <Grid Grid.Row="1" Grid.RowSpan="3" Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
                 <RowDefinition />
@@ -92,8 +99,8 @@
             <Frame Grid.Row="1" x:Name="FuncFrame" NavigationUIVisibility="Hidden" />
         </Grid>
 
-        <GridSplitter  Grid.Row="0" Grid.RowSpan="3" Grid.Column="3"  Width="5" HorizontalAlignment="Stretch"/>
+        <GridSplitter  Grid.Row="1" Grid.RowSpan="3" Grid.Column="3"  Width="5" HorizontalAlignment="Stretch"/>
 
-        <TextBox x:Name="LogText" Grid.Row="0" Grid.RowSpan="3" Grid.Column="4" TextWrapping="Wrap" IsReadOnly="true" />
+        <TextBox x:Name="LogText" Grid.Row="1" Grid.RowSpan="3" Grid.Column="4" TextWrapping="Wrap" IsReadOnly="true" />
     </Grid>
 </Window>

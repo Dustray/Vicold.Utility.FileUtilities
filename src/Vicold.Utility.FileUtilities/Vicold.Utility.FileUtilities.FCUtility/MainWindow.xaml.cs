@@ -63,14 +63,16 @@ namespace Vicold.Utility.FileUtilities.FCUtility
         /// </summary>
         private void UpdateDbInfo()
         {
-            DBCountPanel.Children.Clear();
-
-            var counts = _coreHandler.GetLevelAndTypeDataCount();
-            foreach (var count in counts)
+            Dispatcher.Invoke(() =>
             {
-                var countItem = new DBCountItem(count.Key, count.Value);
-                DBCountPanel.Children.Add(countItem);
-            }
+                DBCountPanel.Children.Clear();
+                var counts = _coreHandler.GetLevelAndTypeDataCount();
+                foreach (var count in counts)
+                {
+                    var countItem = new DBCountItem(count.Key, count.Value);
+                    DBCountPanel.Children.Add(countItem);
+                }
+            });
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -88,24 +90,28 @@ namespace Vicold.Utility.FileUtilities.FCUtility
         {
             FuncFrame.Navigate(_CodeSearchPage);
             UpdateFuncTitle(_CodeSearchPage);
+            ChangeButtonFlag(CodeSearch);
         }
-        
+
         private void FilterLinkFile_Click(object sender, RoutedEventArgs e)
         {
             FuncFrame.Navigate(_filterLinkFilePage);
             UpdateFuncTitle(_filterLinkFilePage);
+            ChangeButtonFlag(FilterLinkFile);
         }
 
         private void ImportToDB_Click(object sender, RoutedEventArgs e)
         {
             FuncFrame.Navigate(_importToDBPage);
             UpdateFuncTitle(_importToDBPage);
+            ChangeButtonFlag(ImportToDB);
         }
 
         private void EditVideoPath_Click(object sender, RoutedEventArgs e)
         {
             FuncFrame.Navigate(_editVideoPathPage);
             UpdateFuncTitle(_editVideoPathPage);
+            ChangeButtonFlag(EditVideoPath);
         }
 
         #endregion
@@ -115,11 +121,35 @@ namespace Vicold.Utility.FileUtilities.FCUtility
             FuncTitleText.Text = funcPage.FuncTitle;
         }
 
-
         private void LogThis(string log)
         {
-            LogText.AppendText($"{log}\r\n");
-            LogText.ScrollToEnd();
+            Dispatcher.Invoke(() =>
+            {
+                LogText.AppendText($"{log}\r\n");
+                LogText.ScrollToEnd();
+            });
+        }
+
+        private void ChangeButtonFlag(System.Windows.Controls.Button button)
+        {
+            for (var i = 2; i < NavButtonPanel.Children.Count; i++)
+            {
+                var child = NavButtonPanel.Children[i];
+                if (child is System.Windows.Controls.Button btn)
+                {
+                    if (btn.Content is System.Windows.Controls.StackPanel panel)
+                    {
+                        if (btn == button)
+                        {
+                            panel.Children[0].Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            panel.Children[0].Visibility = Visibility.Hidden;
+                        }
+                    }
+                }
+            }
         }
 
     }

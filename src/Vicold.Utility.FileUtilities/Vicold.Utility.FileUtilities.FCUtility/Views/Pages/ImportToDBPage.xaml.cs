@@ -53,13 +53,16 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
 
         private void ImportButton_Click(object sender, RoutedEventArgs e)
         {
-            var lines = FileStrUtility.SplitLinks(LinkText.Text);
-            if (lines is { })
+            Task.Run(() =>
             {
-                _coreHandler.WriteUnknownCodeToDatebase(lines);
-                _updateDbInfo.Invoke();
-                _logger.Log(this, $"导入了{lines.Count}条数据");
-            }
+                var lines = FileStrUtility.SplitLinks(LinkText.Text);
+                if (lines is { })
+                {
+                    _coreHandler.WriteUnknownCodeToDatebase(lines);
+                    _updateDbInfo.Invoke();
+                    _logger.Log(this, $"导入了{lines.Count}条数据");
+                }
+            });
         }
 
 

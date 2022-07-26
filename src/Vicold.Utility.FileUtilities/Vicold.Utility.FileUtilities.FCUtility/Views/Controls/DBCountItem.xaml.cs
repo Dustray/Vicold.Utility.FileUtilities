@@ -27,7 +27,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Controls
             this.DataContext = new DBCountItemVM
             {
                 Title = $"{title}: ",
-                Count = count
+                Count = $" {count}"
             };
         }
     }

@@ -9,7 +9,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.ViewModels
     internal class DBCountItemVM
     {
         public string Title { get; set; } = "Unknown";
-        public int Count { get; set; }
+        public string Count { get; set; } = " 0";
 
     }
 }

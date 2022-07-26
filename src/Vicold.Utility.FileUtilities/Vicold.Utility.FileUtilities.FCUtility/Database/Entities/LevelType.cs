@@ -60,15 +60,15 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Database.Entities
             switch (type)
             {
                 case TypeType.Unknown:
-                    return "Unknown";
+                    return "未知";
                 case TypeType.Clean:
-                    return "Clean";
+                    return "无码";
                 case TypeType.CleanMask:
-                    return "CleanMask";
+                    return "无码不露脸";
                 case TypeType.Mosaic:
-                    return "Mosaic";
+                    return "有码";
                 default:
-                    return "Unknown";
+                    return "未知";
             }
         }
     }
