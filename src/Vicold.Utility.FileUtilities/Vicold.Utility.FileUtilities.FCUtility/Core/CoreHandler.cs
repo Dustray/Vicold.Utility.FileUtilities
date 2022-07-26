@@ -14,11 +14,13 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
 {
     internal class CoreHandler : IDisposable
     {
+        private Logger _logger;
         private DBDriver _dBDriver;
         private ConfigDriver _configDriver;
 
-        public CoreHandler()
+        public CoreHandler(Logger logger)
         {
+            _logger = logger;
             _dBDriver = new DBDriver();
             _configDriver = new ConfigDriver();
         }
@@ -40,7 +42,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
 
         public void SaveConfig()
         {
-              _configDriver.Save();
+            _configDriver.Save();
         }
         public Dictionary<string, int> GetLevelAndTypeDataCount()
         {
@@ -69,7 +71,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
             }
 
             countResult.Add($"总和", all);
-            
+
             void Count(TypeType type)
             {
                 for (var i = LevelTypeInfo.MinTypeIndex; i <= LevelTypeInfo.MaxTypeIndex; i++)
@@ -92,8 +94,10 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
         /// </summary>
         public void SyncDatabase()
         {
+            _logger.Log("[DB]", "文件与数据库同步开始");
             var config = _configDriver.GetConfig();
 
+            var count = 0;
             // 遍历更新主路径
             for (var i = LevelTypeInfo.MinTypeIndex; i <= LevelTypeInfo.MaxTypeIndex; i++)
             {
@@ -104,6 +108,8 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
                 SearchMain(level, TypeType.Mosaic);
             }
 
+            _logger.Log("[DB]", $"已同步主资源库，共同步了{count}个文件");
+            count = 0;
             // 遍历更新子路径
             if (config.SubPaths is { })
             {
@@ -116,19 +122,29 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
                 }
             }
 
+            _logger.Log("[DB]", $"已同步临时资源库，共同步了{count}个文件");
+
             void SearchMain(LevelType levelType, TypeType typeType)
             {
                 var codes = GetMainCodes(levelType, typeType);
-                SearchAndSync(codes, levelType, typeType);
+                if (codes is { })
+                {
+                    count += codes.Count();
+                    SearchAndSync(codes, levelType, typeType);
+                }
             }
 
             void SearchSub(string subPath)
             {
                 var codes = GetSubCodes(subPath);
-                SearchAndSync(codes, LevelType.Unset, TypeType.Unknown);
+                if (codes is { })
+                {
+                    count += codes.Count();
+                    SearchAndSync(codes, LevelType.Unset, TypeType.Unknown);
+                }
             }
 
-
+            _logger.Log("[DB]", "文件与数据库同步结束");
         }
 
         public void SearchAndSync(IEnumerable<int>? codes, LevelType levelType, TypeType typeType)

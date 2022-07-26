@@ -21,7 +21,7 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="0"  Orientation="Vertical">
-            <Button Style="{DynamicResource ManagerButtonStyle}" Click="SyncDBToImportToDBButton_Click"
+            <Button Style="{DynamicResource ManagerButtonStyle}" Click="SyncDBButton_Click"
                         ToolTip="从视频文件目录同步（导入并更新）数据库" Foreground="Green" HorizontalAlignment="Stretch" >
                 <StackPanel Orientation="Horizontal">
                     <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE117;"  VerticalAlignment="Center" FontSize="16" Margin="5 0 5 0" />
@@ -29,14 +29,14 @@
                 </StackPanel>
             </Button>
             <Border Height="2" Background="#eee" />
-            <Button Style="{DynamicResource ManagerButtonStyle}"
+            <Button x:Name="FilterLinkFile" Style="{DynamicResource ManagerButtonStyle}" Click="FilterLinkFile_Click"
                          ToolTip="链接过滤" Foreground="Blue" HorizontalAlignment="Stretch"  >
                 <StackPanel Orientation="Horizontal">
                     <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE16E;"  VerticalAlignment="Center" FontSize="16" Margin="5 0 5 0" />
                     <TextBlock Text="链接过滤" FontFamily="微软雅黑" Foreground="Black" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
-            <Button Style="{DynamicResource ManagerButtonStyle}"
+            <Button x:Name="ImportToDB" Style="{DynamicResource ManagerButtonStyle}" Click="ImportToDB_Click"
                          ToolTip="链接导入" Foreground="Maroon" HorizontalAlignment="Stretch" >
                 <StackPanel Orientation="Horizontal">
                     <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE17C;"  VerticalAlignment="Center" FontSize="16" Margin="5 0 5 0" />
@@ -69,9 +69,6 @@
         <StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="2">
             <TextBlock x:Name="FuncTitleText" FontSize="20" Margin="5"/>
             <Frame  x:Name="FuncFrame" NavigationUIVisibility="Hidden"/>
-            <Button Content="过滤文本文件中的数据并保存为新的文件" Click="OpenTxtFileAndFilterButton_Click" Height="40"/>
-            <Button Content="从文本文件中的链接中导入数据库" Click="OpenTxtFileAndImportToDBButton_Click" Height="40"/>
-            <Button Content="重命名所有文件" Click="RenameAllFileButton_Click" Height="40"/>
         </StackPanel>
 
 

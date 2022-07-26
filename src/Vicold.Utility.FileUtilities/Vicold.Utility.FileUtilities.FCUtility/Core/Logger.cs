@@ -9,16 +9,21 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
 {
     internal class Logger
     {
-        private Action<IFuncPage, string> _action;
+        private Action<string> _action;
 
-        public Logger(Action<IFuncPage, string> action)
+        public Logger(Action<string> action)
         {
             _action = action;
         }
 
-        public void Log(IFuncPage page, string message)
+        public void Log(IFuncPage page, string log)
         {
-            _action(page, message);
+            Log(page.FuncTitle, log);
+        }
+
+        public void Log(string head, string log)
+        {
+            _action($"{head}：{log}");
         }
     }
 }

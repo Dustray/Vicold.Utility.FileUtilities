@@ -95,8 +95,8 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
         public static IEnumerable<int> GetAllCodesInFolderLoop(string folder)
         {
             HashSet<int> result = new HashSet<int>();
-            Rename(folder);
-            void Rename(string thisDir)
+            Search(folder);
+            void Search(string thisDir)
             {
                 //绑定到指定的文件夹目录
                 DirectoryInfo dir = new DirectoryInfo(thisDir);
@@ -117,7 +117,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
                             result.Add(code);
                         }
 
-                        Rename(dirPath);
+                        Search(dirPath);
                     }
                     else if (fsinfo is FileInfo fileInfo)
                     {
