@@ -8,11 +8,11 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Height="25">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition />
+            <ColumnDefinition/>
+            <ColumnDefinition  Width="80"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="{Binding  Title}" HorizontalAlignment="Right" FontWeight="Bold"/>
-        <TextBlock Text="{Binding  Count}" Grid.Column="1"/>
+        <TextBlock Text="{Binding Title}" HorizontalAlignment="Right" FontWeight="Bold" FontSize="14"/>
+        <TextBlock Text="{Binding Count}" Grid.Column="1" FontSize="14"/>
     </Grid>
 </UserControl>

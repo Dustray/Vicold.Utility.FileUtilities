@@ -60,6 +60,9 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
             {
                 _logger.Log(this, "搜索内容不合法，无法检测到代码");
             }
+
+            FastSearchText.Focus();
+            FastSearchText.SelectAll();
         }
     }
 }

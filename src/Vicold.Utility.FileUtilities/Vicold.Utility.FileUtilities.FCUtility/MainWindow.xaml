@@ -58,7 +58,7 @@
                 </StackPanel>
             </Button>
             <Button x:Name="EditVideoPath" Style="{DynamicResource ManagerButtonStyle}" Click="EditVideoPath_Click"
-                        ToolTip="编辑视频路径" Foreground="OrangeRed" HorizontalAlignment="Stretch"  >
+                        ToolTip="编辑视频路径" Foreground="OrangeRed" HorizontalAlignment="Stretch">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE104;"  VerticalAlignment="Center" FontSize="16" Margin="5 0 5 0" />
                     <TextBlock Text="编辑视频路径" FontFamily="微软雅黑" Foreground="Black"  VerticalAlignment="Center"/>
@@ -68,19 +68,32 @@
 
         <GridSplitter Grid.Row="1" Grid.Column="0"  Height="5" HorizontalAlignment="Stretch"/>
 
-        <StackPanel Grid.Row="2" Grid.Column="0" x:Name="DBCountPanel" Orientation="Vertical">
-        </StackPanel>
+        <Grid Grid.Row="2" Grid.Column="0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="1"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="数据统计" Margin="10" FontSize="16" HorizontalAlignment="Center"/>
+            <Border Grid.Row="1" Height="1" Background="#eee" Margin="10 0" />
+            <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+                <StackPanel Grid.Row="2" Grid.Column="0" x:Name="DBCountPanel" Orientation="Vertical" Margin="5"/>
+            </ScrollViewer>
+        </Grid>
 
         <GridSplitter  Grid.Row="0" Grid.RowSpan="3" Grid.Column="1"  Width="5" HorizontalAlignment="Stretch"/>
 
-        <StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="2">
+        <Grid Grid.Row="0" Grid.RowSpan="3" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
             <TextBlock x:Name="FuncTitleText" FontSize="20" Margin="5"/>
-            <Frame  x:Name="FuncFrame" NavigationUIVisibility="Hidden"/>
-        </StackPanel>
-
+            <Frame Grid.Row="1" x:Name="FuncFrame" NavigationUIVisibility="Hidden" />
+        </Grid>
 
         <GridSplitter  Grid.Row="0" Grid.RowSpan="3" Grid.Column="3"  Width="5" HorizontalAlignment="Stretch"/>
 
-        <TextBox x:Name="LogText" Grid.Row="0" Grid.RowSpan="3" Grid.Column="4" TextWrapping="Wrap" />
+        <TextBox x:Name="LogText" Grid.Row="0" Grid.RowSpan="3" Grid.Column="4" TextWrapping="Wrap" IsReadOnly="true" />
     </Grid>
 </Window>
