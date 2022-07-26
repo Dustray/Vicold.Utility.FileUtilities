@@ -10,7 +10,7 @@
 
     <StackPanel>
 
-        <Grid  Height="40">
+        <Grid Height="40">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="120"/>
                 <ColumnDefinition Width="*"/>
@@ -21,7 +21,7 @@
             <Button Grid.Column="2" x:Name="FastFilterButton" Content="选择并执行" Margin="5" Width="80" HorizontalAlignment="Right" Click="FastFilterButton_Click"/>
         </Grid>
 
-        <Border   Height="2" Background="#eee" Margin="10"/>
+        <Border Height="2" Background="#eee" Margin="10"/>
 
         <Grid  Height="120">
             <Grid.RowDefinitions>
@@ -41,9 +41,9 @@
             <TextBox   Grid.Row="2" Grid.Column="1" x:Name="OutPathText" Width="auto" Margin="5"/>
         </Grid>
 
-        <TextBox  x:Name="BeforeText" Width="auto" Margin="5" MinHeight="100"/>
+        <TextBox  x:Name="BeforeText" Width="auto" Margin="5" MinHeight="100" TextWrapping="Wrap" AcceptsReturn="True"/>
         <Button  x:Name="ExecuteButton" Content="过滤" Margin="5" Height="30" Width="80" HorizontalAlignment="Center" Click="ExecuteButton_Click"/>
-        <TextBox  x:Name="AfterText" Width="auto" Margin="5" MinHeight="100"/>
+        <TextBox  x:Name="AfterText" Width="auto" Margin="5" MinHeight="100" TextWrapping="Wrap" AcceptsReturn="True"/>
         <Button  x:Name="SaveButton" Content="保存文件" Margin="5" Height="30" Width="80" HorizontalAlignment="Center" Click="SaveButton_Click"/>
     </StackPanel>
 </Page>

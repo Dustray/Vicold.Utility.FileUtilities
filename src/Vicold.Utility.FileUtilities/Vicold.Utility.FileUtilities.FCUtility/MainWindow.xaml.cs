@@ -16,6 +16,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility
     public partial class MainWindow : Window
     {
         private CoreHandler _coreHandler;
+        private CodeSearchPage _CodeSearchPage;
         private FilterLinkFilePage _filterLinkFilePage;
         private ImportToDBPage _importToDBPage;
         private EditVideoPathPage _editVideoPathPage;
@@ -26,12 +27,13 @@ namespace Vicold.Utility.FileUtilities.FCUtility
             InitializeComponent();
             _logger = new(LogThis);
             _coreHandler = new CoreHandler(_logger);
+            _CodeSearchPage = new(_coreHandler, _logger);
             _filterLinkFilePage = new(_coreHandler, _logger);
             _importToDBPage = new(_coreHandler, _logger, UpdateDbInfo);
             _editVideoPathPage = new(_coreHandler, _logger);
             //_coreHandler.SyncDatabase();
             UpdateDbInfo();
-
+            CodeSearch_Click(1, new RoutedEventArgs());
         }
         /// <summary>
         /// 从视频文件目录同步（导入并更新）数据库
@@ -82,6 +84,12 @@ namespace Vicold.Utility.FileUtilities.FCUtility
 
         #region 切换Pages
 
+        private void CodeSearch_Click(object sender, RoutedEventArgs e)
+        {
+            FuncFrame.Navigate(_CodeSearchPage);
+            UpdateFuncTitle(_CodeSearchPage);
+        }
+        
         private void FilterLinkFile_Click(object sender, RoutedEventArgs e)
         {
             FuncFrame.Navigate(_filterLinkFilePage);

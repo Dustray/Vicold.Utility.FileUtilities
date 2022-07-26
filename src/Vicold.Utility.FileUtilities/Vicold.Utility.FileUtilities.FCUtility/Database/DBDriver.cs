@@ -34,25 +34,6 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Database
             return data.Count(v => v.Level == levelType && v.Type == typeType);
         }
 
-        public void Insert(CodeTable codeTable)
-        {
-            var data = _db.GetCollection<CodeTable>(_codeTable);
-            codeTable.UpdateTime = DateTime.Now;
-            data.EnsureIndex(x => x.Code, true);
-            data.Insert(codeTable);
-            HasDataChanged = true;
-        }
-
-        public void Insert(long code, LevelType levelType, TypeType typeType)
-        {
-            Insert(new CodeTable()
-            {
-                Code = code,
-                Level = levelType,
-                Type = typeType,
-            });
-        }
-
         public IEnumerable<CodeTable>? SearchAll()
         {
             var data = _db.GetCollection<CodeTable>(_codeTable);
@@ -120,14 +101,47 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Database
             });
         }
 
-        public void InsertOrUpdate(long code, LevelType levelType, TypeType typeType)
+        public void Insert(CodeTable codeTable)
         {
-            InsertOrUpdate(new CodeTable()
+            var data = _db.GetCollection<CodeTable>(_codeTable);
+            codeTable.UpdateTime = DateTime.Now;
+            data.EnsureIndex(x => x.Code, true);
+            data.Insert(codeTable);
+            HasDataChanged = true;
+        }
+
+        public void Insert(long code, LevelType levelType, TypeType typeType, DateTime? createTime = null)
+        {
+            var table = new CodeTable()
             {
                 Code = code,
                 Level = levelType,
                 Type = typeType,
-            });
+            };
+
+            if (createTime is { })
+            {
+                table.CreateTime = createTime.Value;
+            }
+
+            Insert(table);
+        }
+
+        public void InsertOrUpdate(long code, LevelType levelType, TypeType typeType, DateTime? createTime = null)
+        {
+            var table = new CodeTable()
+            {
+                Code = code,
+                Level = levelType,
+                Type = typeType,
+            };
+
+            if (createTime is { })
+            {
+                table.CreateTime = createTime.Value;
+            }
+
+            InsertOrUpdate(table);
         }
 
         public void InsertOrUpdate(CodeTable codeTable)
@@ -151,14 +165,21 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Database
             HasDataChanged = true;
         }
 
-        public void InsertIfNotExist(long code, LevelType levelType, TypeType typeType)
+        public void InsertIfNotExist(long code, LevelType levelType, TypeType typeType, DateTime? createTime = null)
         {
-            InsertIfNotExist(new CodeTable()
+            var table = new CodeTable()
             {
                 Code = code,
                 Level = levelType,
                 Type = typeType,
-            });
+            };
+
+            if (createTime is { })
+            {
+                table.CreateTime = createTime.Value;
+            }
+
+            InsertIfNotExist(table);
         }
 
         public void InsertIfNotExist(CodeTable codeTable)

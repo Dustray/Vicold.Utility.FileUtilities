@@ -34,9 +34,14 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Database.Entities
             return result;
         }
 
-        public static string GetTypeString(int index)
+        public static string GetTypeName(int index)
         {
             return GetType(index).ToString();
+        }
+
+        public static string GetLevelName(LevelType level)
+        {
+            return GetTypeName((int)level);
         }
     }
 

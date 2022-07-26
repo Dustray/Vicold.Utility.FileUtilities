@@ -25,6 +25,8 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
             _configDriver = new ConfigDriver();
         }
 
+        public DBDriver DB => _dBDriver;
+
         public bool HasDatabaseChanged()
         {
             return _dBDriver.HasDataChanged;
@@ -397,6 +399,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
                 }
             }
         }
+
 
         public void Dispose()
         {

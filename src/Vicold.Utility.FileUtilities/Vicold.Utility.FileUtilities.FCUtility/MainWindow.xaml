@@ -29,6 +29,13 @@
                 </StackPanel>
             </Button>
             <Border Height="2" Background="#eee" />
+            <Button x:Name="CodeSearch" Style="{DynamicResource ManagerButtonStyle}" Click="CodeSearch_Click"
+                         ToolTip="代码查询" Foreground="Indigo" HorizontalAlignment="Stretch"  >
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE11A;"  VerticalAlignment="Center" FontSize="16" Margin="5 0 5 0" />
+                    <TextBlock Text="代码查询" FontFamily="微软雅黑" Foreground="Black" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
             <Button x:Name="FilterLinkFile" Style="{DynamicResource ManagerButtonStyle}" Click="FilterLinkFile_Click"
                          ToolTip="链接过滤" Foreground="Blue" HorizontalAlignment="Stretch"  >
                 <StackPanel Orientation="Horizontal">

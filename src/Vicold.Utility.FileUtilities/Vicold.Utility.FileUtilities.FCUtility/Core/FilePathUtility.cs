@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Vicold.Utility.FileUtilities.FCUtility.Core
 {
-    internal static  class FilePathUtility
+    internal static class FilePathUtility
     {
         private static readonly int MIN_LEN = 5;
         private static readonly int MAX_LEN = 9;
@@ -62,6 +62,11 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
                 }
 
                 index++;
+            }
+
+            if (result is not { } && code.Count >= minLen && code.Count <= maxLen)
+            {
+                result = new string(code.ToArray());
             }
 
             int CheckPreStrIndex(int searchIndex)
@@ -238,7 +243,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
             Directory.Move(oldPath, newPath);
             return newPath;
         }
-        
+
         public static string? GetFileNameFromDragEventArgs(System.Windows.DragEventArgs e)
         {
             var data = e.Data.GetData(System.Windows.DataFormats.FileDrop);

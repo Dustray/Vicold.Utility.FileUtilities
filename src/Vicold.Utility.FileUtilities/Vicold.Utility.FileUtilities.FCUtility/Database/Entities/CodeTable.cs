@@ -18,6 +18,8 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Database.Entities
 
         public TypeType Type { get; set; } = TypeType.Unknown;
 
+        public DateTime CreateTime { get; set; } = DateTime.Now;
+        
         public DateTime UpdateTime { get; set; } = DateTime.Now;
 
     }
