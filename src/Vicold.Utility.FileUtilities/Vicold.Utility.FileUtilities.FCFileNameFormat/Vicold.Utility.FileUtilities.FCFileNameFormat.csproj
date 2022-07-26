@@ -1,0 +1,60 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="DemoFiles\484321 - 副本.mp4" />
+    <None Remove="DemoFiles\beauty\432.txt" />
+    <None Remove="DemoFiles\beauty\fc-ppv-354732 - 副本.txt" />
+    <None Remove="DemoFiles\beauty\fc-ppv-354732.txt" />
+    <None Remove="DemoFiles\beauty\fc-ppv-53455322 - 副本 - 副本.txt" />
+    <None Remove="DemoFiles\beauty\fcppv-3425454- 副本 - 副本.txt" />
+    <None Remove="DemoFiles\fc-1546423 - 副本.mp4" />
+    <None Remove="DemoFiles\fc-ppv-1546423.mp4" />
+    <None Remove="DemoFiles\fc-ppv-5526637- 副本.mp4" />
+    <None Remove="DemoFiles\fc2197895\fc-ppv-1546423.mp4" />
+    <None Remove="DemoFiles\fc2197895\fc-ppv-5526637- 副本.mp4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="DemoFiles\484321 - 副本.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DemoFiles\beauty\fc-ppv-354732 - 副本.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DemoFiles\beauty\fc-ppv-354732.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DemoFiles\beauty\fc-ppv-53455322 - 副本 - 副本.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DemoFiles\beauty\432.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DemoFiles\beauty\fcppv-3425454- 副本 - 副本.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DemoFiles\fc-1546423 - 副本.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DemoFiles\fc-ppv-1546423.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DemoFiles\fc-ppv-5526637- 副本.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DemoFiles\fc2197895\fc-ppv-1546423.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DemoFiles\fc2197895\fc-ppv-5526637- 副本.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

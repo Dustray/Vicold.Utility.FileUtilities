@@ -1,0 +1,242 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Vicold.Utility.FileUtilities.FCUtility.Core
+{
+    internal class FilePathUtility
+    {
+        private static readonly int MIN_LEN = 5;
+        private static readonly int MAX_LEN = 9;
+        private static readonly string[] PRE_STR_HINT = { "ppv-", "ppv", "fc", "v-", "-", "v" }; // 顺序不可改
+        private static readonly string[] OUT_EXT = { ".torrent", ".gif", ".jpg", ".png", ".mov", ".mov", ".tmp" };
+        public static string? GetCodeFromLongStr(string longStr)
+        {
+            foreach (var exts in OUT_EXT)
+            {
+                if (longStr.ToLower().EndsWith(exts))
+                {
+                    return null;
+                }
+            }
+
+            var minLen = 6;
+            var maxLen = 9;
+            IList<char> code = new List<char>(maxLen);
+            string? result = null;
+            int resultIndex = 999;
+            int index = 0;
+            int maxHintIndex = PRE_STR_HINT.Length;
+            foreach (char ascii in longStr)
+            {
+
+                if (int.TryParse(ascii.ToString(), out int num))
+                {
+                    code.Add(ascii);
+                }
+                else
+                {
+                    if (code.Count < minLen || code.Count > maxLen)
+                    {
+                        code.Clear();
+                    }
+                    else
+                    {
+                        if (code.Count < minLen && code.Count > maxLen)
+                        {
+                            continue;
+                        }
+
+                        // 找到了
+                        var hintIndex = CheckPreStrIndex(index - code.Count);
+                        if (hintIndex < resultIndex)
+                        {
+                            result = new string(code.ToArray());
+                        }
+
+                        code.Clear();
+                    }
+                }
+
+                index++;
+            }
+
+            int CheckPreStrIndex(int searchIndex)
+            {
+                for (var i = 0; i < maxHintIndex; i++)
+                {
+                    var preStr = PRE_STR_HINT[i];
+
+                    if (preStr.Length > searchIndex + 1)
+                    {
+                        continue;
+                    }
+
+                    if (preStr is { })
+                    {
+                        var target = longStr.Substring(searchIndex - preStr.Length, preStr.Length);
+                        if (target is { } && target.ToLower() == preStr)
+                        {
+                            return i;
+                        }
+                    }
+                }
+
+                return maxHintIndex;
+            }
+
+            return result;
+        }
+
+
+        public static IEnumerable<int> GetAllCodesInFolderLoop(string folder)
+        {
+            HashSet<int> result = new HashSet<int>();
+            Rename(folder);
+            void Rename(string thisDir)
+            {
+                //绑定到指定的文件夹目录
+                DirectoryInfo dir = new DirectoryInfo(thisDir);
+
+                //检索表示当前目录的文件和子目录
+                FileSystemInfo[] fsinfos = dir.GetFileSystemInfos();
+
+                //遍历检索的文件和子目录
+                foreach (FileSystemInfo fsinfo in fsinfos)
+                {
+                    //判断是否为空文件夹　　
+                    if (fsinfo is DirectoryInfo dirInfo)
+                    {
+                        var dirPath = dirInfo.FullName;
+                        var newCode = GetCodeFromLongStr(dirInfo.Name);
+                        if (newCode is { } && int.TryParse(newCode, out var code))
+                        {
+                            result.Add(code);
+                        }
+
+                        Rename(dirPath);
+                    }
+                    else if (fsinfo is FileInfo fileInfo)
+                    {
+                        if (fileInfo.Extension.ToLower() != ".mp4")
+                        {
+                            continue;
+                        }
+
+                        var newCode = GetCodeFromLongStr(fileInfo.Name);
+                        if (newCode is { } && int.TryParse(newCode, out var code))
+                        {
+                            result.Add(code);
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public static bool TryToInteger(string? str, out int code)
+        {
+            if (str is { } && int.TryParse(str, out code))
+            {
+                return true;
+            }
+
+            code = 0;
+            return false;
+        }
+
+        /// <summary>
+        /// 全路径修改文件名
+        /// </summary>
+        /// <param name="oldFullName"></param>
+        /// <param name="newName"></param>
+        /// <returns></returns>
+        public static string GetNewFileName(string oldFullName, string newName)
+        {
+            var dir = Path.GetDirectoryName(oldFullName);
+            if (dir == null)
+            {
+                return oldFullName;
+            }
+
+            var ext = Path.GetExtension(oldFullName);
+            var newFullName = Path.Combine(dir, newName + ext);
+            return newFullName;
+        }
+
+        /// <summary>
+        /// 全路径修改最末尾文件夹名称
+        /// </summary>
+        /// <param name="oldFullName"></param>
+        /// <param name="newName"></param>
+        /// <returns></returns>
+        public static string GetNewDirPath(string oldFullName, string newName)
+        {
+            if (oldFullName[^1] == '\\' || oldFullName[^1] == '/')
+            {
+                oldFullName = oldFullName[..^1];
+            }
+
+            var dir = oldFullName[..oldFullName.LastIndexOf('\\')];
+            var newFullName = Path.Combine(dir, newName);
+            return newFullName;
+        }
+
+        /// <summary>
+        /// 移动文件
+        /// </summary>
+        /// <param name="oldPath"></param>
+        /// <param name="newPath"></param>
+        /// <param name="conflict"></param>
+        /// <returns></returns>
+        public static string MoveFile(string oldPath, string newPath, ref int conflict)
+        {
+
+            if (File.Exists(newPath))
+            {
+                var dir = Path.GetDirectoryName(newPath);
+                if (dir == null)
+                {
+                    return oldPath;
+                }
+
+                var name = Path.GetFileNameWithoutExtension(newPath);
+                Console.WriteLine("****冲突：" + name);
+                var ext = Path.GetExtension(newPath);
+                newPath = Path.Combine(dir, name + "-" + (conflict++) + ext);
+            }
+
+            File.Move(oldPath, newPath);
+            return newPath;
+        }
+
+        /// <summary>
+        /// 移动文件夹
+        /// </summary>
+        /// <param name="oldPath"></param>
+        /// <param name="newPath"></param>
+        /// <returns></returns>
+        public static string MoveDir(string oldPath, string newPath, ref int dumCode)
+        {
+            if (Directory.Exists(newPath))
+            {
+                if (newPath[newPath.Length - 1] == '\\' || newPath[newPath.Length - 1] == '/')
+                {
+                    newPath = newPath.Substring(0, newPath.Length - 1);
+                }
+
+                var dir = newPath.Substring(0, newPath.LastIndexOf('\\'));
+                var name = Path.GetFileNameWithoutExtension(newPath);
+                Console.WriteLine("****冲突：" + name);
+                newPath = Path.Combine(dir, name + "——" + (dumCode++));
+            }
+
+            Directory.Move(oldPath, newPath);
+            return newPath;
+        }
+    }
+}

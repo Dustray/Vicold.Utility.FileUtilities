@@ -1,0 +1,82 @@
+﻿<Window x:Class="Vicold.Utility.FileUtilities.FCUtility.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Vicold.Utility.FileUtilities.FCUtility"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="1200" Closing="Window_Closing" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="300" MinHeight="300"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition MinHeight="10"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" MinWidth="200"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition MinWidth="200"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="400" MinWidth="100"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0"  Orientation="Vertical">
+            <Button Style="{DynamicResource ManagerButtonStyle}" Click="SyncDBToImportToDBButton_Click"
+                        ToolTip="从视频文件目录同步（导入并更新）数据库" Foreground="Green" HorizontalAlignment="Stretch" >
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE117;"  VerticalAlignment="Center" FontSize="16" Margin="5 0 5 0" />
+                    <TextBlock Text="同步数据库" FontFamily="微软雅黑" Foreground="Black" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Border Height="2" Background="#eee" />
+            <Button Style="{DynamicResource ManagerButtonStyle}"
+                         ToolTip="链接过滤" Foreground="Blue" HorizontalAlignment="Stretch"  >
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE16E;"  VerticalAlignment="Center" FontSize="16" Margin="5 0 5 0" />
+                    <TextBlock Text="链接过滤" FontFamily="微软雅黑" Foreground="Black" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button Style="{DynamicResource ManagerButtonStyle}"
+                         ToolTip="链接导入" Foreground="Maroon" HorizontalAlignment="Stretch" >
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE17C;"  VerticalAlignment="Center" FontSize="16" Margin="5 0 5 0" />
+                    <TextBlock Text="链接导入" FontFamily="微软雅黑" Foreground="Black" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button Style="{DynamicResource ManagerButtonStyle}"
+                        ToolTip="格式化文件名" Foreground="LightSalmon" HorizontalAlignment="Stretch"  >
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE13E;"  VerticalAlignment="Center" FontSize="16" Margin="5 0 5 0" />
+                    <TextBlock Text="格式化文件名" FontFamily="微软雅黑" Foreground="Black"  VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button x:Name="EditVideoPath" Style="{DynamicResource ManagerButtonStyle}" Click="EditVideoPath_Click"
+                        ToolTip="编辑视频路径" Foreground="OrangeRed" HorizontalAlignment="Stretch"  >
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE104;"  VerticalAlignment="Center" FontSize="16" Margin="5 0 5 0" />
+                    <TextBlock Text="编辑视频路径" FontFamily="微软雅黑" Foreground="Black"  VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
+        <GridSplitter Grid.Row="1" Grid.Column="0"  Height="5" HorizontalAlignment="Stretch"/>
+
+        <StackPanel Grid.Row="2" Grid.Column="0" x:Name="DBCountPanel" Orientation="Vertical">
+        </StackPanel>
+
+        <GridSplitter  Grid.Row="0" Grid.RowSpan="3" Grid.Column="1"  Width="5" HorizontalAlignment="Stretch"/>
+
+        <StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="2">
+            <TextBlock x:Name="FuncTitleText" FontSize="20" Margin="5"/>
+            <Frame  x:Name="FuncFrame" NavigationUIVisibility="Hidden"/>
+            <Button Content="过滤文本文件中的数据并保存为新的文件" Click="OpenTxtFileAndFilterButton_Click" Height="40"/>
+            <Button Content="从文本文件中的链接中导入数据库" Click="OpenTxtFileAndImportToDBButton_Click" Height="40"/>
+            <Button Content="重命名所有文件" Click="RenameAllFileButton_Click" Height="40"/>
+        </StackPanel>
+
+
+        <GridSplitter  Grid.Row="0" Grid.RowSpan="3" Grid.Column="3"  Width="5" HorizontalAlignment="Stretch"/>
+
+        <TextBox x:Name="LogText" Grid.Row="0" Grid.RowSpan="3" Grid.Column="4" />
+    </Grid>
+</Window>
