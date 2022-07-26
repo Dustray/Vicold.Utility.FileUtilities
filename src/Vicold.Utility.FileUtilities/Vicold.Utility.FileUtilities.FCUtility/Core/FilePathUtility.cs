@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Vicold.Utility.FileUtilities.FCUtility.Core
 {
-    internal class FilePathUtility
+    internal static  class FilePathUtility
     {
         private static readonly int MIN_LEN = 5;
         private static readonly int MAX_LEN = 9;
@@ -237,6 +237,22 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
 
             Directory.Move(oldPath, newPath);
             return newPath;
+        }
+        
+        public static string? GetFileNameFromDragEventArgs(System.Windows.DragEventArgs e)
+        {
+            var data = e.Data.GetData(System.Windows.DataFormats.FileDrop);
+            var array = data as Array;
+            if (array is { })
+            {
+                var value = array.GetValue(0);
+                if (value is { })
+                {
+                    var fileName = value.ToString();
+                    return fileName;
+                }
+            }
+            return null;
         }
     }
 }

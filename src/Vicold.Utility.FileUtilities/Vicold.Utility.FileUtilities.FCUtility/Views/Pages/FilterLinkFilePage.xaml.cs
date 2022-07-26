@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -26,8 +27,10 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
 
         private void FastFilterButton_Click(object sender, RoutedEventArgs e)
         {
+            _logger.Log(this, $"执行快速过滤");
             OpenFileDialog openF = new OpenFileDialog();
             openF.Title = "Load a txt file";
+            openF.Filter = "文本文件|*.txt";
             if (openF.ShowDialog() == true)
             {
                 var sourcePath = openF.FileName;
@@ -41,6 +44,12 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
                     {
                         sw.WriteLine(resultLine);
                     }
+
+                    _logger.Log(this, $"执行快速过滤完成，源文件记录数{lines.Count}条，过滤后记录数{result.Count}条，过滤掉{lines.Count - result.Count}数据，文件已保存为{newFilePath}");
+                }
+                else
+                {
+                    _logger.Log(this, $"执行快速过滤结束，源文件条目数为0。");
                 }
             }
         }
@@ -56,17 +65,17 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
         {
             OpenFileDialog openF = new OpenFileDialog();
             openF.Title = "Load a txt file";
+            openF.Filter = "文本文件|*.txt";
             if (openF.ShowDialog() == true)
             {
                 var sourcePath = openF.FileName;
-                InPathText.Text = sourcePath;
-                OutPathText.Text = CreateFilteredFileName(sourcePath);
-                BeforeText.Text = File.ReadAllText(sourcePath);
+                LoadInPath(sourcePath);
             }
         }
 
         private void ExecuteButton_Click(object sender, RoutedEventArgs e)
         {
+            _logger.Log(this, $"执行过滤");
             var lines = FileStrUtility.SplitLinks(BeforeText.Text);
             if (lines is { })
             {
@@ -78,9 +87,14 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
                     {
                         builder.AppendLine(subPath);
                     }
+                    _logger.Log(this, $"执行过滤完成，源文件记录数{lines.Count}条，过滤后记录数{result.Count}条，过滤掉{lines.Count - result.Count}数据");
                 }
 
                 AfterText.Text = builder.ToString();
+            }
+            else
+            {
+                _logger.Log(this, $"执行过滤结束，源文件条目数为0。");
             }
         }
 
@@ -98,7 +112,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
                 MessageBox.Show("输出路径格式错误", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            
+
             if (!Directory.Exists(dir))
             {
                 try
@@ -122,10 +136,38 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
                     return;
                 }
             }
-            
+
             File.WriteAllText(file, AfterText.Text);
+            _logger.Log(this, $"文件已保存为{file}");
         }
 
+        private void Page_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.Text))
+            {
+                e.Effects = DragDropEffects.Link;
+            }
+            else
+            {
+                e.Effects = DragDropEffects.None;
+            }
+        }
 
+        private void Page_Drop(object sender, DragEventArgs e)
+        {
+            var path = FilePathUtility.GetFileNameFromDragEventArgs(e);
+            if (path is { })
+            {
+                LoadInPath(path);
+            }
+        }
+
+        private void LoadInPath(string path)
+        {
+            InPathText.Text = path;
+            OutPathText.Text = CreateFilteredFileName(path);
+            BeforeText.Text = File.ReadAllText(path);
+            _logger.Log(this, $"打开文件：{path}");
+        }
     }
 }

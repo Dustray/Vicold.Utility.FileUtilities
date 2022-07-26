@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Vicold.Utility.FileUtilities.FCUtility.Views.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="800" AllowDrop="True" DragEnter="Page_DragEnter" Drop="Page_Drop"
       Title="FilterLinkFilePage">
 
     <StackPanel>
@@ -17,11 +17,11 @@
                 <ColumnDefinition Width="120"/>
             </Grid.ColumnDefinitions>
             <TextBlock Text="文件快速过滤" Margin="5" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <TextBlock Grid.Column="1" Text="新文件将保存在同目录中" Margin="5" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="1" Text="新文件将保存在同目录中" Margin="5" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#555"/>
             <Button Grid.Column="2" x:Name="FastFilterButton" Content="选择并执行" Margin="5" Width="80" HorizontalAlignment="Right" Click="FastFilterButton_Click"/>
         </Grid>
 
-        <Border   Height="2" Background="#eee" />
+        <Border   Height="2" Background="#eee" Margin="10"/>
 
         <Grid  Height="120">
             <Grid.RowDefinitions>
@@ -30,13 +30,15 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Text="链接过滤" Margin="5" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Button  Grid.Row="0" Grid.Column="1" x:Name="OpenFileButton" Content="浏览" Margin="5" Width="80" HorizontalAlignment="Right" Click="OpenFileButton_Click"/>
-            <TextBox Grid.Row="1" Grid.Column="1" x:Name="InPathText"  Width="auto" Margin="5"/>
-            <TextBox Grid.Row="2" Grid.Column="1" x:Name="OutPathText" Width="auto" Margin="5"/>
+            <Button    Grid.Row="0" Grid.Column="1" x:Name="OpenFileButton" Content="浏览" Margin="5" Width="80" HorizontalAlignment="Right" Click="OpenFileButton_Click"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="目标文件路径：" VerticalAlignment="Center" Margin="5" Foreground="#555"/>
+            <TextBox   Grid.Row="1" Grid.Column="1" x:Name="InPathText"  Width="auto" Margin="5"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="保存文件路径：" VerticalAlignment="Center" Margin="5" Foreground="#555"/>
+            <TextBox   Grid.Row="2" Grid.Column="1" x:Name="OutPathText" Width="auto" Margin="5"/>
         </Grid>
 
         <TextBox  x:Name="BeforeText" Width="auto" Margin="5" MinHeight="100"/>

@@ -61,5 +61,28 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
                 _logger.Log(this, $"导入了{lines.Count}条数据");
             }
         }
+
+
+        private void Page_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.Text))
+            {
+                e.Effects = DragDropEffects.Link;
+            }
+            else
+            {
+                e.Effects = DragDropEffects.None;
+            }
+        }
+
+        private void Page_Drop(object sender, DragEventArgs e)
+        {
+            var path = FilePathUtility.GetFileNameFromDragEventArgs(e);
+            if (path is { })
+            {
+                LinkText.Text = File.ReadAllText(path);
+                _logger.Log(this, $"打开文件：{path}");
+            }
+        }
     }
 }

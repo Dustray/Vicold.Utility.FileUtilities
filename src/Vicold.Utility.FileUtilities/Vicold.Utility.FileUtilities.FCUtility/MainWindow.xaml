@@ -74,6 +74,6 @@
 
         <GridSplitter  Grid.Row="0" Grid.RowSpan="3" Grid.Column="3"  Width="5" HorizontalAlignment="Stretch"/>
 
-        <TextBox x:Name="LogText" Grid.Row="0" Grid.RowSpan="3" Grid.Column="4" />
+        <TextBox x:Name="LogText" Grid.Row="0" Grid.RowSpan="3" Grid.Column="4" TextWrapping="Wrap" />
     </Grid>
 </Window>
