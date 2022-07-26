@@ -25,10 +25,10 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Database.Entities
 
         public static LevelType GetType(int index)
         {
-            if (index < MinTypeIndex || index > MaxTypeIndex)
-            {
-                throw new ArgumentOutOfRangeException($"index must be between {MinTypeIndex} and {MaxTypeIndex}");
-            }
+            //if (index < MinTypeIndex || index > MaxTypeIndex)
+            //{
+            //    throw new ArgumentOutOfRangeException($"index must be between {MinTypeIndex} and {MaxTypeIndex}");
+            //}
 
             var result = (LevelType)index;
             return result;

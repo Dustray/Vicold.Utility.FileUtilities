@@ -75,7 +75,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
                 {
                     var preStr = PRE_STR_HINT[i];
 
-                    if (preStr.Length > searchIndex + 1)
+                    if (preStr.Length >= searchIndex + 1)
                     {
                         continue;
                     }

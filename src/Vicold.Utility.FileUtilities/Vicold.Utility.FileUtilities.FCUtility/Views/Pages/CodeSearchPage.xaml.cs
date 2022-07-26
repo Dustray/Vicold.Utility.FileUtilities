@@ -34,11 +34,11 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
 
         public string FuncTitle { get; } = "代码搜索";
 
-        private void FastSearchButton_Click(object sender, RoutedEventArgs e)
+        private async void FastSearchButton_Click(object sender, RoutedEventArgs e)
         {
-            Task.Run(() =>
+            var codeLong = FastSearchText.Text;
+            await Task.Run(() =>
             {
-                var codeLong = FastSearchText.Text;
                 if (string.IsNullOrWhiteSpace(codeLong))
                 {
                     _logger.Log(this, "请输入搜索内容");
@@ -62,10 +62,10 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
                 {
                     _logger.Log(this, "搜索内容不合法，无法检测到代码");
                 }
-
-                FastSearchText.Focus();
-                FastSearchText.SelectAll();
             });
+
+            FastSearchText.Focus();
+            FastSearchText.SelectAll();
         }
     }
 }
