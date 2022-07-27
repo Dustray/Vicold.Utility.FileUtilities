@@ -96,9 +96,86 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
             return result;
         }
 
-        public static IEnumerable<KeyValuePair<int,string>> GetAllCodesPathInFolderLoop(string folder)
+        /// <summary>
+        /// 获取重复文件（size相同）
+        /// </summary>
+        /// <param name="folder"></param>
+        /// <returns></returns>
+        public static Dictionary<int, List<string>> GetDupCodesPathInFolderLoop(IList<string> folders)
         {
-            Dictionary<int,string> result = new Dictionary<int, string>();
+            // <code, <size, path[]>>
+            Dictionary<int, Dictionary<long, List<string>>> result = new Dictionary<int, Dictionary<long, List<string>>>();
+            foreach (var folder in folders)
+            {
+                Search(folder);
+            }
+
+            void Search(string thisDir)
+            {
+                //绑定到指定的文件夹目录
+                DirectoryInfo dir = new DirectoryInfo(thisDir);
+
+                //检索表示当前目录的文件和子目录
+                FileSystemInfo[] fsinfos = dir.GetFileSystemInfos();
+
+                //遍历检索的文件和子目录
+                foreach (FileSystemInfo fsinfo in fsinfos)
+                {
+                    if (fsinfo is FileInfo fileInfo)
+                    {
+                        if (fileInfo.Extension.ToLower() != ".mp4")
+                        {
+                            continue;
+                        }
+
+                        var newCode = GetCodeFromLongStr(fileInfo.Name);
+                        if (newCode is { } && int.TryParse(newCode, out var code))
+                        {
+                            if (result.TryGetValue(code, out var sizeDict))
+                            {
+                                if (sizeDict.TryGetValue(fileInfo.Length, out var pathList))
+                                {
+                                    pathList.Add(fileInfo.FullName);
+                                }
+                                else
+                                {
+                                    sizeDict[fileInfo.Length] = new List<string>() { fileInfo.FullName };
+                                }
+                            }
+                            else
+                            {
+                                result[code] = new Dictionary<long, List<string>>() { { fileInfo.Length, new List<string>() { fileInfo.FullName } } };
+                            }
+                        }
+                    }
+                }
+            }
+
+            var filteredResult = new Dictionary<int, List<string>>();
+            foreach (var item in result)
+            {
+                foreach (var sizeItem in item.Value)
+                {
+                    if (sizeItem.Value.Count > 1)
+                    {
+                        if (filteredResult.TryGetValue(item.Key, out var pathList))
+                        {
+                            pathList.AddRange(sizeItem.Value);
+                        }
+                        else
+                        {
+                            filteredResult[item.Key] = sizeItem.Value;
+                        }
+                    }
+                }
+            }
+
+            return filteredResult;
+        }
+
+        public static IEnumerable<KeyValuePair<int, string>> GetAllCodesPathInFolderLoop(string folder)
+        {
+            Dictionary<int, string> result = new Dictionary<int, string>();
             Search(folder);
             void Search(string thisDir)
             {
@@ -141,6 +218,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
 
             return result;
         }
+
         public static IEnumerable<int> GetAllCodesInFolderLoop(string folder)
         {
             HashSet<int> result = new HashSet<int>();

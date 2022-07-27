@@ -20,7 +20,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility
         private FilterLinkFilePage _filterLinkFilePage;
         private ImportToDBPage _importToDBPage;
         private EditVideoPathPage _editVideoPathPage;
-        private RenameFilePage _renameFilePage;
+        private FileOperationPage _renameFilePage;
         private Logger _logger;
 
         public MainWindow()

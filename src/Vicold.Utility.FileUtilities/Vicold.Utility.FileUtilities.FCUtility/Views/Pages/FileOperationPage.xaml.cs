@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,13 +13,13 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
     /// <summary>
     /// RenameFilePage.xaml 的交互逻辑
     /// </summary>
-    public partial class RenameFilePage : Page, IFuncPage
+    public partial class FileOperationPage : Page, IFuncPage
     {
         private CoreHandler _coreHandler;
         private Logger _logger;
         private bool modified = false;
 
-        internal RenameFilePage(CoreHandler coreHandler, Logger logger)
+        internal FileOperationPage(CoreHandler coreHandler, Logger logger)
         {
             InitializeComponent();
             _coreHandler = coreHandler;
@@ -67,10 +68,33 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
             }
         }
 
+
+        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            LoadConfig();
+            modified = false;
+        }
+
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            PathText.Clear();
+            modified = true;
+        }
+
+        private void PathText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            modified = true;
+        }
+
+        /// <summary>
+        /// 文件重命名
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void RenameButton_Click(object sender, RoutedEventArgs e)
         {
             _logger.Log(this, "资源重命名开始");
-            
+
             // 遍历SubPathText的每一行
             var subPaths = PathText.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             await Task.Run(() =>
@@ -91,21 +115,33 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
             _logger.Log(this, "资源重命名完成");
         }
 
-        private void ResetButton_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// 文件查重
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void CheckDupButton_Click(object sender, RoutedEventArgs e)
         {
-            LoadConfig();
-            modified = false;
-        }
+            _logger.Log(this, "资源文件查重开始");
+            // 遍历SubPathText的每一行
+            var subPaths = PathText.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            await Task.Run(() =>
+            {
+                if (subPaths is { })
+                {
+                    var result = FilePathUtility.GetDupCodesPathInFolderLoop(subPaths);
+                    foreach(var item in result)
+                    {
+                        _logger.Log(this, $"资源代码{item.Key}重复个数为：{item.Value.Count}");
+                        foreach(var path in item.Value)
+                        {
+                            _logger.Log(this, $"    {path}");
+                        }
+                    }
+                }
+            });
 
-        private void ClearButton_Click(object sender, RoutedEventArgs e)
-        {
-            PathText.Clear();
-            modified = true;
-        }
-
-        private void PathText_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            modified = true;
+            _logger.Log(this, "资源文件查重完成");
         }
     }
 }
