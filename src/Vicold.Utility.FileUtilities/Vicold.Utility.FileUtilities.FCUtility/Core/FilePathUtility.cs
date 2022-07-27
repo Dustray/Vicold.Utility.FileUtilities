@@ -96,7 +96,51 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
             return result;
         }
 
+        public static IEnumerable<KeyValuePair<int,string>> GetAllCodesPathInFolderLoop(string folder)
+        {
+            Dictionary<int,string> result = new Dictionary<int, string>();
+            Search(folder);
+            void Search(string thisDir)
+            {
+                //绑定到指定的文件夹目录
+                DirectoryInfo dir = new DirectoryInfo(thisDir);
 
+                //检索表示当前目录的文件和子目录
+                FileSystemInfo[] fsinfos = dir.GetFileSystemInfos();
+
+                //遍历检索的文件和子目录
+                foreach (FileSystemInfo fsinfo in fsinfos)
+                {
+                    //判断是否为空文件夹　　
+                    if (fsinfo is DirectoryInfo dirInfo)
+                    {
+                        var dirPath = dirInfo.FullName;
+                        var newCode = GetCodeFromLongStr(dirInfo.Name);
+                        if (newCode is { } && int.TryParse(newCode, out var code))
+                        {
+                            result[code] = dirPath;
+                        }
+
+                        Search(dirPath);
+                    }
+                    else if (fsinfo is FileInfo fileInfo)
+                    {
+                        if (fileInfo.Extension.ToLower() != ".mp4")
+                        {
+                            continue;
+                        }
+
+                        var newCode = GetCodeFromLongStr(fileInfo.Name);
+                        if (newCode is { } && int.TryParse(newCode, out var code))
+                        {
+                            result[code] = fileInfo.FullName;
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
         public static IEnumerable<int> GetAllCodesInFolderLoop(string folder)
         {
             HashSet<int> result = new HashSet<int>();

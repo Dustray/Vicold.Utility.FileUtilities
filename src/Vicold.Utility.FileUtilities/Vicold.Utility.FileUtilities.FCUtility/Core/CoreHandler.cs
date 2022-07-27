@@ -160,6 +160,31 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
             });
         }
 
+        public void SearchAndSync(IEnumerable<KeyValuePair<int, string>>? codes, LevelType levelType, TypeType typeType)
+        {
+            if (codes is { })
+            {
+                foreach (var code in codes)
+                {
+                    var existCode = _dBDriver.Search(code.Key);
+                    if (existCode is { } && existCode.FilePath is { } && File.Exists(existCode.FilePath))
+                    {
+                        _logger.Log("[DB]", $"Code{code}文件已存在，请查看文件是否重复：");
+                        _logger.Log("[DB]", $"Code{code}已存在文件：{existCode.FilePath}");
+                        _logger.Log("[DB]", $"Code{code}新查到文件：{code.Value}");
+                    }
+
+                    _dBDriver.InsertOrUpdate(new CodeTable()
+                    {
+                        Code = code.Key,
+                        Level = levelType,
+                        Type = typeType,
+                        FilePath = code.Value
+                    });
+                }
+            }
+        }
+
         public void SearchAndSync(IEnumerable<int>? codes, LevelType levelType, TypeType typeType)
         {
             if (codes is { })
@@ -177,7 +202,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
         /// <param name="levelName"></param>
         /// <param name="typeName"></param>
         /// <returns></returns>
-        private IEnumerable<int>? GetMainCodes(LevelType levelName, TypeType typeName)
+        private IEnumerable<KeyValuePair<int, string>>? GetMainCodes(LevelType levelName, TypeType typeName)
         {
             var config = _configDriver.GetConfig();
             if (config.MainPath is { })
@@ -188,11 +213,26 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
                     return null;
                 }
 
-                var codes = FilePathUtility.GetAllCodesInFolderLoop(dir);
+                var codes = FilePathUtility.GetAllCodesPathInFolderLoop(dir);
                 return codes;
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// 获取支路径中文件的代码
+        /// </summary>
+        /// <param name="subPath"></param>
+        /// <returns></returns>
+        private IEnumerable<KeyValuePair<int, string>>? GetSubCodes(string subPath)
+        {
+            if (!Directory.Exists(subPath))
+            {
+                return null;
+            }
+            var codes = FilePathUtility.GetAllCodesPathInFolderLoop(subPath);
+            return codes;
         }
 
         /// <summary>
@@ -220,20 +260,6 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
             }
         }
 
-        /// <summary>
-        /// 获取支路径中文件的代码
-        /// </summary>
-        /// <param name="subPath"></param>
-        /// <returns></returns>
-        private IEnumerable<int>? GetSubCodes(string subPath)
-        {
-            if (!Directory.Exists(subPath))
-            {
-                return null;
-            }
-            var codes = FilePathUtility.GetAllCodesInFolderLoop(subPath);
-            return codes;
-        }
 
         /// <summary>
         /// 链接去重

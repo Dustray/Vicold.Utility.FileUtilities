@@ -85,6 +85,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Database
             existedTable.Level = codeTable.Level;
             existedTable.Type = codeTable.Type;
             existedTable.UpdateTime = DateTime.Now;
+            existedTable.FilePath = codeTable.FilePath;
             var data = _db.GetCollection<CodeTable>(_codeTable);
             data.EnsureIndex(x => x.Code, true);
             data.Update(existedTable);
@@ -159,6 +160,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Database
                 existedTable.Level = codeTable.Level;
                 existedTable.Type = codeTable.Type;
                 existedTable.UpdateTime = DateTime.Now;
+                existedTable.FilePath = codeTable.FilePath;
                 data.EnsureIndex(x => x.Code, true);
                 data.Update(existedTable);
             }

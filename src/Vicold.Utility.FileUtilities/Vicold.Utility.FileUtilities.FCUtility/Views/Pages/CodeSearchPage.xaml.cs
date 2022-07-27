@@ -44,6 +44,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
                     _logger.Log(this, "请输入搜索内容");
                     return;
                 }
+
                 var codeStr = FilePathUtility.GetCodeFromLongStr(codeLong);
                 if (codeStr is { } && int.TryParse(codeStr, out var code))
                 {
@@ -51,7 +52,11 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
                     var info = _coreHandler.DB.Search(code);
                     if (info is { })
                     {
-                        _logger.Log(this, $"数据库中存在此代码，类型为{TypeTypeInfo.GetTypeName(info.Type)}，级别为{LevelTypeInfo.GetLevelName(info.Level)}");
+                        _logger.Log(this, $"查找成功，类型为{TypeTypeInfo.GetTypeName(info.Type)}，级别为{LevelTypeInfo.GetLevelName(info.Level)}");
+                        if (info.FilePath is { })
+                        {
+                            _logger.Log(this, $"文件路径为{info.FilePath}");
+                        }
                     }
                     else
                     {
