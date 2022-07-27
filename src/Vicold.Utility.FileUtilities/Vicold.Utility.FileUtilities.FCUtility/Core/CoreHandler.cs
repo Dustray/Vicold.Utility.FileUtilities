@@ -108,6 +108,11 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
                 _logger.Log("[DB]", "文件与数据库同步开始");
                 var config = _configDriver.GetConfig();
 
+                if (!Directory.Exists(config.MainPath))
+                {
+                    _logger.Log("[DB]", $"主资源路径[{config.MainPath}]不存在");
+                }
+                
                 var count = 0;
                 // 遍历更新主路径
                 for (var i = LevelTypeInfo.MinTypeIndex; i <= LevelTypeInfo.MaxTypeIndex; i++)
@@ -229,6 +234,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
         {
             if (!Directory.Exists(subPath))
             {
+                _logger.Log("[DB]", $"临时资源路径[{subPath}]不存在");
                 return null;
             }
             var codes = FilePathUtility.GetAllCodesPathInFolderLoop(subPath);
@@ -284,8 +290,9 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
             return result;
         }
 
-        public void RenameFileFormat(string root, bool isLoop)
+        public void RenameFileFormat(string root, bool isLoop, bool isMoveUnformatFile = false)
         {
+            var renameCount = 0;
             var config = _configDriver.GetConfig();
             Rename(root, 0);
 
@@ -340,9 +347,10 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
                                 if (newPath.ToUpper() != fileInfo.FullName.ToUpper())
                                 {
                                     FilePathUtility.MoveFile(fileInfo.FullName, newPath, ref conflict);
+                                    renameCount++;
                                 }
                             }
-                            else
+                            else if (isMoveUnformatFile) // 将不符合命名规范的文件放到单独的垃圾桶目录
                             {
                                 // 垃圾桶
                                 var fileDir = Path.GetDirectoryName(fileInfo.FullName);

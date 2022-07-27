@@ -15,6 +15,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
     {
         private CoreHandler _coreHandler;
         private Logger _logger;
+        private bool modified = false;
 
         internal EditVideoPathPage(CoreHandler coreHandler, Logger logger)
         {
@@ -23,6 +24,8 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
             _logger = logger;
             LoadConfig();
         }
+
+        public string FuncTitle { get; } = "编辑视频资源路径";
 
         private void LoadConfig()
         {
@@ -43,7 +46,14 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
             }
         }
 
-        public string FuncTitle { get; } = "编辑视频资源路径";
+        public void Reflush()
+        {
+            if (!modified)
+            {
+                LoadConfig();
+            }
+        }
+
 
         private void MainPathButton_Click(object sender, RoutedEventArgs e)
         {
@@ -53,6 +63,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 MainPathText.Text = dialog.SelectedPath;
+                modified = true;
             }
 
         }
@@ -64,6 +75,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 SubPathText.AppendText($"{dialog.SelectedPath}\r\n");
+                modified = true;
             }
         }
 
@@ -108,6 +120,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
             config.SubPaths = subPaths;
             _coreHandler.SaveConfig();
             _logger.Log(this, "路径保存成功");
+            modified = false;
         }
     }
 }

@@ -55,8 +55,8 @@
                     <TextBlock Text="链接导入" FontFamily="微软雅黑" Foreground="Black" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
-            <Button Style="{DynamicResource ManagerButtonStyle}"
-                        ToolTip="格式化文件名" Foreground="LightSalmon" HorizontalAlignment="Stretch"  >
+            <Button x:Name="RenameFile" Style="{DynamicResource ManagerButtonStyle}" Click="RenameFile_Click"
+                         ToolTip="格式化文件名" Foreground="LightSalmon" HorizontalAlignment="Stretch" >
                 <StackPanel Orientation="Horizontal">
                     <Border Width="3" Background="LightSalmon" Visibility="Hidden"/>
                     <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE13E;"  VerticalAlignment="Center" FontSize="16" Margin="5 0 5 0" />

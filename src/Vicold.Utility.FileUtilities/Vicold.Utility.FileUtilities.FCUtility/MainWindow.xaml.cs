@@ -20,6 +20,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility
         private FilterLinkFilePage _filterLinkFilePage;
         private ImportToDBPage _importToDBPage;
         private EditVideoPathPage _editVideoPathPage;
+        private RenameFilePage _renameFilePage;
         private Logger _logger;
 
         public MainWindow()
@@ -31,6 +32,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility
             _filterLinkFilePage = new(_coreHandler, _logger);
             _importToDBPage = new(_coreHandler, _logger, UpdateDbInfo);
             _editVideoPathPage = new(_coreHandler, _logger);
+            _renameFilePage = new(_coreHandler, _logger);
             //_coreHandler.SyncDatabase();
             UpdateDbInfo();
             CodeSearch_Click(1, new RoutedEventArgs());
@@ -45,17 +47,6 @@ namespace Vicold.Utility.FileUtilities.FCUtility
         {
             _coreHandler.SyncDatabase();
             UpdateDbInfo();
-        }
-
-        /// <summary>
-        /// 重命名所有文件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void RenameAllFileButton_Click(object sender, RoutedEventArgs e)
-        {
-            return;
-            _coreHandler.RenameAllFile();
         }
 
         /// <summary>
@@ -112,8 +103,16 @@ namespace Vicold.Utility.FileUtilities.FCUtility
             FuncFrame.Navigate(_editVideoPathPage);
             UpdateFuncTitle(_editVideoPathPage);
             ChangeButtonFlag(EditVideoPath);
+            _editVideoPathPage.Reflush();
         }
 
+        private void RenameFile_Click(object sender, RoutedEventArgs e)
+        {
+            FuncFrame.Navigate(_renameFilePage);
+            UpdateFuncTitle(_renameFilePage);
+            ChangeButtonFlag(RenameFile);
+            _renameFilePage.Reflush();
+        }
         #endregion
 
         private void UpdateFuncTitle(IFuncPage funcPage)
