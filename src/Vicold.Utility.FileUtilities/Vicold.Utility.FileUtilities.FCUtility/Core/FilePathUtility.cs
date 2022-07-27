@@ -12,7 +12,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
         private static readonly int MIN_LEN = 5;
         private static readonly int MAX_LEN = 9;
         private static readonly string[] PRE_STR_HINT = { "ppv-", "ppv", "fc", "v-", "-", "v" }; // 顺序不可改
-        private static readonly string[] OUT_EXT = { ".torrent", ".gif", ".jpg", ".png", ".mov", ".mov", ".tmp" };
+        private static readonly string[] OUT_EXT = {  ".gif", ".jpg", ".png", ".mov", ".mov", ".tmp" };
         public static string? GetCodeFromLongStr(string longStr)
         {
             foreach (var exts in OUT_EXT)

@@ -76,10 +76,10 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
 
         private void ExecuteButton_Click(object sender, RoutedEventArgs e)
         {
+            _logger.Log(this, $"执行过滤");
+            var lines = FileStrUtility.SplitLinks(BeforeText.Text);
             Task.Run(() =>
             {
-                _logger.Log(this, $"执行过滤");
-                var lines = FileStrUtility.SplitLinks(BeforeText.Text);
                 if (lines is { })
                 {
                     var result = _coreHandler.LinkDuplicateRemoval(lines);

@@ -28,7 +28,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
             modified = false;
         }
 
-        public string FuncTitle { get; } = "视频资源格式重命名";
+        public string FuncTitle { get; } = "视频资源文件操作";
 
         private void LoadConfig()
         {

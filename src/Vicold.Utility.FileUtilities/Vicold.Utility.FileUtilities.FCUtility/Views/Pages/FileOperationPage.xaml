@@ -20,7 +20,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="重命名路径" Margin="5" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBlock Text="文件操作路径" Margin="5" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Button Grid.Column="1" x:Name="GetPathButton" Content="浏览" Margin="5" Width="80" HorizontalAlignment="Right" Click="GetPathButton_Click"/>
         </Grid>
 

@@ -151,5 +151,15 @@ namespace Vicold.Utility.FileUtilities.FCUtility
             }
         }
 
+        private void ReadOnlyButton_Click(object sender, RoutedEventArgs e)
+        {
+            LogText.IsReadOnly = !LogText.IsReadOnly;
+            ReadOnlyButton.Content = LogText.IsReadOnly ? "编辑" : "只读";
+        }
+
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
+        {
+            LogText.Clear();
+        }
     }
 }

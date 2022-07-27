@@ -112,7 +112,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
                 {
                     _logger.Log("[DB]", $"主资源路径[{config.MainPath}]不存在");
                 }
-                
+
                 var count = 0;
                 // 遍历更新主路径
                 for (var i = LevelTypeInfo.MinTypeIndex; i <= LevelTypeInfo.MaxTypeIndex; i++)
@@ -172,11 +172,11 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
                 foreach (var code in codes)
                 {
                     var existCode = _dBDriver.Search(code.Key);
-                    if (existCode is { } && existCode.FilePath is { } && File.Exists(existCode.FilePath))
+                    if (existCode is { } && existCode.FilePath is { } && File.Exists(existCode.FilePath) && existCode.FilePath != code.Value)
                     {
-                        _logger.Log("[DB]", $"Code{code}文件已存在，请查看文件是否重复：");
-                        _logger.Log("[DB]", $"Code{code}已存在文件：{existCode.FilePath}");
-                        _logger.Log("[DB]", $"Code{code}新查到文件：{code.Value}");
+                        _logger.Log("[DB]", $"Code{code.Key}文件已存在，请查看文件是否重复：");
+                        _logger.Log("[DB]", $"Code{code.Key}已存在文件：{existCode.FilePath}");
+                        _logger.Log("[DB]", $"Code{code.Key}新查到文件：{code.Value}");
                     }
 
                     _dBDriver.InsertOrUpdate(new CodeTable()

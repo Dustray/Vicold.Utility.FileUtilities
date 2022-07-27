@@ -64,7 +64,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Database.Entities
                 case TypeType.Clean:
                     return "无码";
                 case TypeType.CleanMask:
-                    return "无码不露脸";
+                    return "无码遮脸";
                 case TypeType.Mosaic:
                     return "有码";
                 default:
