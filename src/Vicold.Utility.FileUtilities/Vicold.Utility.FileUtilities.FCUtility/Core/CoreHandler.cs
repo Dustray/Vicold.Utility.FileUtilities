@@ -169,20 +169,17 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
         {
             if (codes is { })
             {
-                var existedCode = new HashSet<long>();
                 foreach (var code in codes)
                 {
                     var existCode = _dBDriver.Search(code.Key);
                     if (existCode is { } // code不为空
                     && existCode.FilePath is { } // 文件路径不为空
                     && File.Exists(existCode.FilePath)  // 文件存在
-                    && existCode.FilePath != code.Value // 文件路径不一致
-                    && !existedCode.TryGetValue(code.Key,out _)) // 已经查找过
+                    && existCode.FilePath != code.Value) // 文件路径不一致 
                     {
                         _logger.Log("[DB]", $"Code[{code.Key}]文件已存在，请查看文件是否重复：");
                         _logger.Log("[DB]", $"  已存在文件：{existCode.FilePath}");
                         _logger.Log("[DB]", $"  新查到文件：{code.Value}");
-                        existedCode.Add(code.Key);
                     }
 
                     _dBDriver.InsertOrUpdate(new CodeTable()

@@ -53,9 +53,10 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
 
         private void ImportButton_Click(object sender, RoutedEventArgs e)
         {
+            var text = LinkText.Text;
             Task.Run(() =>
             {
-                var lines = FileStrUtility.SplitLinks(LinkText.Text);
+                var lines = FileStrUtility.SplitLinks(text);
                 if (lines is { })
                 {
                     _coreHandler.WriteUnknownCodeToDatebase(lines);

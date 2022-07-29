@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Vicold.Utility.FileUtilities.FCUtility"
         mc:Ignorable="d"
-        Title="FC2-PPV Tool" Height="800" Width="1200" Closing="Window_Closing" WindowStartupLocation="CenterScreen">
+        Title="FC2-PPV Tool" Height="800" Width="1200" Closing="Window_Closing" WindowStartupLocation="CenterScreen" AllowDrop="true">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
