@@ -20,7 +20,7 @@
                 <ColumnDefinition Width="90"/>
             </Grid.ColumnDefinitions>
             <TextBox x:Name="FastSearchText" Width="auto" Margin="5"/>
-            <Button Grid.Column="1" x:Name="FastSearchButton" Content="搜索" Margin="5" Width="80" HorizontalAlignment="Right" Click="FastSearchButton_Click"/>
+            <Button Grid.Column="1" x:Name="FastSearchButton" Style="{DynamicResource ExecuteButtonStyle}" Content="搜索" Margin="5" Width="80" HorizontalAlignment="Right" Click="FastSearchButton_Click"/>
         </Grid>
 
     </StackPanel>

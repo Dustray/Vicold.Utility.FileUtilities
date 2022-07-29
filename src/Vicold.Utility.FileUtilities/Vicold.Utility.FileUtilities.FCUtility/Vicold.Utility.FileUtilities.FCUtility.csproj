@@ -44,6 +44,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Styles\ButtonStyleDictionary.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Views\Pages\FileOperationPage.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>

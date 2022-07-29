@@ -22,7 +22,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Text="主资源文件仓库路径" Margin="5" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Button Grid.Column="1" x:Name="MainPathButton" Content="浏览" Margin="5" Width="80" HorizontalAlignment="Right" Click="MainPathButton_Click"/>
+            <Button Grid.Column="1" x:Name="MainPathButton" Content="浏览" Margin="5" Width="80" HorizontalAlignment="Right" Click="MainPathButton_Click" Style="{DynamicResource ExplorerButtonStyle}"/>
         </Grid>
 
         <TextBox  Grid.Row="1"  x:Name="MainPathText" Width="auto" Margin="5" />
@@ -33,10 +33,10 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Text="临时资源文件仓库路径" Margin="5" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Button Grid.Column="1" x:Name="SubPathButton" Content="浏览" Margin="5" Width="80" HorizontalAlignment="Right" Click="SubPathButton_Click"/>
+            <Button Grid.Column="1" x:Name="SubPathButton" Content="浏览" Margin="5" Width="80" HorizontalAlignment="Right" Click="SubPathButton_Click" Style="{DynamicResource ExplorerButtonStyle}"/>
         </Grid>
 
         <TextBox  Grid.Row="3"  x:Name="SubPathText" Width="auto"  Margin="5" TextWrapping="Wrap" AcceptsReturn="True"/>
-        <Button  Grid.Row="4" x:Name="SaveButton" Content="保存" Margin="5" Width="80"  HorizontalAlignment="Center" Click="SaveButton_Click"/>
+        <Button  Grid.Row="4" x:Name="SaveButton" Content="保存" Margin="5" Width="80"  HorizontalAlignment="Center" Click="SaveButton_Click" Style="{DynamicResource ExecuteButtonStyle}"/>
     </Grid>
 </Page>

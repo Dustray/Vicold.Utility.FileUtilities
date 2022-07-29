@@ -9,7 +9,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="300" MinHeight="300"/>
+            <RowDefinition Height="310" MinHeight="310"/>
             <RowDefinition Height="auto"/>
             <RowDefinition MinHeight="10"/>
         </Grid.RowDefinitions>
@@ -30,7 +30,7 @@
                     <TextBlock Text="同步数据库" FontFamily="微软雅黑" Foreground="Black" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
-            <Border Height="1" Background="#ddd" Margin="10 0"/>
+            <Border Height="1" Background="#ccc" Margin="10 0"/>
             <Button x:Name="CodeSearch" Style="{DynamicResource ManagerButtonStyle}" Click="CodeSearch_Click"
                          ToolTip="代码查询" Foreground="Indigo" HorizontalAlignment="Stretch"  >
                 <StackPanel Orientation="Horizontal">
@@ -73,7 +73,7 @@
             </Button>
         </StackPanel>
 
-        <GridSplitter Grid.Row="2" Grid.Column="0"  Height="2" HorizontalAlignment="Stretch" Background="#ccc"/>
+        <GridSplitter Grid.Row="2" Grid.Column="0"  Height="3" HorizontalAlignment="Stretch" Background="#ccc"/>
 
         <Grid Grid.Row="3" Grid.Column="0" Background="#1347" >
             <Grid.RowDefinitions>
@@ -82,7 +82,7 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <TextBlock Text="数据统计" Margin="10" FontSize="16" HorizontalAlignment="Center"/>
-            <Border Grid.Row="1" Height="1" Background="#ddd" Margin="10 0" />
+            <Border Grid.Row="1" Height="1" Background="#ccc" Margin="10 0" />
             <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
                 <StackPanel Grid.Row="2" Grid.Column="0" x:Name="DBCountPanel" Orientation="Vertical" Margin="5"/>
             </ScrollViewer>
@@ -92,33 +92,35 @@
 
         <Grid Grid.Row="1" Grid.RowSpan="3" Grid.Column="2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <TextBlock x:Name="FuncTitleText" FontSize="20" Margin="5"/>
-            <Frame Grid.Row="1" x:Name="FuncFrame" NavigationUIVisibility="Hidden" />
+            <TextBlock x:Name="FuncTitleText" FontSize="20" Margin="5" VerticalAlignment="Center"/>
+            <Border Grid.Row="1" Height="1" Background="#ccc" Margin="10 0"/>
+            <Frame Grid.Row="2" x:Name="FuncFrame" NavigationUIVisibility="Hidden" Margin="5"/>
         </Grid>
 
         <GridSplitter  Grid.Row="1" Grid.RowSpan="3" Grid.Column="3"  Width="5" HorizontalAlignment="Stretch"/>
 
         <Grid Grid.Row="1" Grid.RowSpan="3" Grid.Column="4">
             <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Grid Margin="5">
+            <Grid Margin="5" Height="34" VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock  FontSize="20" Text="日志"/>
-                <Button x:Name="ReadOnlyButton" Grid.Column="1" Content="编辑" Width="50" Margin="2"  Click="ReadOnlyButton_Click"/>
-                <Button x:Name="ClearButton"    Grid.Column="2" Content="清空" Width="50" Margin="2"  Click="ClearButton_Click"/>
+                <TextBlock  FontSize="20" Text="日志" VerticalAlignment="Center"/>
+                <Button x:Name="ReadOnlyButton" Grid.Column="1" Content="编辑" Width="50"  Margin="2"  Click="ReadOnlyButton_Click" Style="{DynamicResource ExplorerButtonStyle}"/>
+                <Button x:Name="ClearButton"    Grid.Column="2" Content="清空" Width="50"  Margin="2"  Click="ClearButton_Click" Style="{DynamicResource ExplorerButtonStyle}"/>
             </Grid>
-            <Border Grid.Row="1" Height="1" Background="#ddd" Margin="10 0 10 5"/>
-            <TextBox x:Name="LogText" Grid.Row="2" TextWrapping="Wrap" IsReadOnly="true" BorderThickness="0" VerticalScrollBarVisibility="Auto"/>
+            <Border Grid.Row="1" Height="1" Background="#ccc" Margin="10 0"/>
+            <TextBox x:Name="LogText" Grid.Row="2" TextWrapping="Wrap" IsReadOnly="true" BorderThickness="0" Margin="5" VerticalScrollBarVisibility="Auto"/>
         </Grid>
     </Grid>
 </Window>

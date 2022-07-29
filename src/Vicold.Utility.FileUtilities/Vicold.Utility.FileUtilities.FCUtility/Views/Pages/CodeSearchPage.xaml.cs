@@ -52,10 +52,10 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
                     var info = _coreHandler.DB.Search(code);
                     if (info is { })
                     {
-                        _logger.Log(this, $"查找成功，类型为{TypeTypeInfo.GetTypeName(info.Type)}，级别为{LevelTypeInfo.GetLevelName(info.Level)}");
+                        _logger.Log(this, $"查找成功，类型：{TypeTypeInfo.GetTypeName(info.Type)}，级别：{LevelTypeInfo.GetLevelName(info.Level)}");
                         if (info.FilePath is { })
                         {
-                            _logger.Log(this, $"文件路径为{info.FilePath}");
+                            _logger.Log(this, $"文件路径：{info.FilePath}");
                         }
                     }
                     else

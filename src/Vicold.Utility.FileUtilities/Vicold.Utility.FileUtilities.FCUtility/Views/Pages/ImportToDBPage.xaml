@@ -21,12 +21,12 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Text="导入链接" Margin="5" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Button Grid.Column="1" x:Name="OpenFileButton" Content="从文件读取" Margin="5" Width="80" HorizontalAlignment="Right" Click="OpenFileButton_Click"/>
+            <Button Grid.Column="1" x:Name="OpenFileButton" Content="从文件读取" Margin="5" Width="80" HorizontalAlignment="Right" Click="OpenFileButton_Click" Style="{DynamicResource ExplorerButtonStyle}"/>
         </Grid>
 
         <TextBox Grid.Row="1" x:Name="LinkText" Width="auto" Margin="5" TextWrapping="Wrap" AcceptsReturn="True"/>
 
-        <Button Grid.Row="2"  x:Name="ImportButton" Content="导入" Margin="5" Width="80" HorizontalAlignment="Center" Click="ImportButton_Click"/>
+        <Button Grid.Row="2"  x:Name="ImportButton" Content="导入" Margin="5" Width="80" HorizontalAlignment="Center" Click="ImportButton_Click" Style="{DynamicResource ExecuteButtonStyle}"/>
         
     </Grid>
 </Page>

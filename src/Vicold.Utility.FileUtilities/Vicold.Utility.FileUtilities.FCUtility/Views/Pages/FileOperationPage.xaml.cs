@@ -124,12 +124,12 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
         {
             _logger.Log(this, "资源文件查重开始");
             // 遍历SubPathText的每一行
-            var subPaths = PathText.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            var paths = PathText.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             await Task.Run(() =>
             {
-                if (subPaths is { })
+                if (paths is { })
                 {
-                    var result = FilePathUtility.GetDupCodesPathInFolderLoop(subPaths);
+                    var result = FilePathUtility.GetDupCodesPathInFolderLoop(paths);
                     foreach(var item in result)
                     {
                         _logger.Log(this, $"资源代码{item.Key}重复个数为：{item.Value.Count}");

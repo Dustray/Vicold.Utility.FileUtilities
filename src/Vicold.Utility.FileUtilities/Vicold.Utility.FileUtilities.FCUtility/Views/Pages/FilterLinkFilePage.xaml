@@ -12,7 +12,7 @@
 
         <Grid.RowDefinitions>
             <RowDefinition  Height="40"/>
-            <RowDefinition  Height="2"/>
+            <RowDefinition  Height="auto"/>
             <RowDefinition Height="120"/>
             <RowDefinition/>
             <RowDefinition Height="40"/>
@@ -27,10 +27,10 @@
             </Grid.ColumnDefinitions>
             <TextBlock Text="文件快速过滤" Margin="5" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <TextBlock Grid.Column="1" Text="新文件将保存在同目录中" Margin="5" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="#555"/>
-            <Button Grid.Column="2" x:Name="FastFilterButton" Content="选择并执行" Margin="5" Width="80" HorizontalAlignment="Right" Click="FastFilterButton_Click"/>
+            <Button Grid.Column="2" x:Name="FastFilterButton" Content="选择并执行" Margin="5" Width="80" HorizontalAlignment="Right" Click="FastFilterButton_Click" Style="{DynamicResource ExecuteButtonStyle}"/>
         </Grid>
 
-        <Border Grid.Row="1" Height="2" Background="#eee" Margin="10"/>
+        <Border Grid.Row="1" Height="1" Background="#eee" Margin="5"/>
 
         <Grid  Grid.Row="2" >
             <Grid.RowDefinitions>
@@ -43,7 +43,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Text="链接过滤" Margin="5" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Button    Grid.Row="0" Grid.Column="1" x:Name="OpenFileButton" Content="浏览" Margin="5" Width="80" HorizontalAlignment="Right" Click="OpenFileButton_Click"/>
+            <Button    Grid.Row="0" Grid.Column="1" x:Name="OpenFileButton" Content="浏览" Margin="5" Width="80" HorizontalAlignment="Right" Click="OpenFileButton_Click" Style="{DynamicResource ExplorerButtonStyle}"/>
             <TextBlock Grid.Row="1" Grid.Column="0" Text="目标文件路径：" VerticalAlignment="Center" Margin="5" Foreground="#555"/>
             <TextBox   Grid.Row="1" Grid.Column="1" x:Name="InPathText"  Width="auto" Margin="5"/>
             <TextBlock Grid.Row="2" Grid.Column="0" Text="保存文件路径：" VerticalAlignment="Center" Margin="5" Foreground="#555"/>
@@ -51,8 +51,8 @@
         </Grid>
 
         <TextBox Grid.Row="3"  x:Name="BeforeText" Width="auto" Margin="5" TextWrapping="Wrap" AcceptsReturn="True"/>
-        <Button Grid.Row="4"  x:Name="ExecuteButton" Content="过滤" Margin="5"  Width="80" HorizontalAlignment="Center" Click="ExecuteButton_Click"/>
+        <Button Grid.Row="4"  x:Name="ExecuteButton" Content="过滤" Margin="5"  Width="80" HorizontalAlignment="Center" Click="ExecuteButton_Click" Style="{DynamicResource ExecuteButtonStyle}"/>
         <TextBox Grid.Row="5"  x:Name="AfterText" Width="auto" Margin="5"  TextWrapping="Wrap" AcceptsReturn="True"/>
-        <Button Grid.Row="6"  x:Name="SaveButton" Content="保存文件" Margin="5" Width="80" HorizontalAlignment="Center" Click="SaveButton_Click"/>
+        <Button Grid.Row="6"  x:Name="SaveButton" Content="保存文件" Margin="5" Width="80" HorizontalAlignment="Center" Click="SaveButton_Click" Style="{DynamicResource ExecuteButtonStyle}"/>
     </Grid>
 </Page>

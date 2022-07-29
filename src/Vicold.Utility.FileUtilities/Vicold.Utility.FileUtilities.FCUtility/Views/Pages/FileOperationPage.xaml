@@ -21,7 +21,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Text="文件操作路径" Margin="5" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Button Grid.Column="1" x:Name="GetPathButton" Content="浏览" Margin="5" Width="80" HorizontalAlignment="Right" Click="GetPathButton_Click"/>
+            <Button Grid.Column="1" x:Name="GetPathButton" Content="浏览" Margin="5" Width="80" HorizontalAlignment="Right" Click="GetPathButton_Click" Style="{DynamicResource ExplorerButtonStyle}"/>
         </Grid>
 
         <TextBox  Grid.Row="1"  x:Name="PathText" Width="auto"  Margin="5" TextWrapping="Wrap" AcceptsReturn="True" TextChanged="PathText_TextChanged"/>
@@ -33,13 +33,13 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height ="50"/>
-                <RowDefinition Height ="50"/>
+                <RowDefinition Height ="40"/>
+                <RowDefinition Height ="40"/>
             </Grid.RowDefinitions>
-            <Button Grid.Row="0" Grid.Column="0" x:Name="ResetButton" Content="重置"     Margin="5" Width="80"  HorizontalAlignment="Center" Click="ResetButton_Click"/>
-            <Button Grid.Row="0" Grid.Column="1" x:Name="ClearButton" Content="清空"     Margin="5" Width="80"  HorizontalAlignment="Center" Click="ClearButton_Click"/>
-            <Button Grid.Row="0" Grid.Column="2" x:Name="SaveButton"  Content="重命名"   Margin="5" Width="80"  HorizontalAlignment="Center" Click="RenameButton_Click"/>
-            <Button Grid.Row="1" Grid.Column="2" x:Name="CheckDupButton" Content="文件查重" Margin="5" Width="80"  HorizontalAlignment="Center" Click="CheckDupButton_Click"/>
+            <Button Grid.Row="0" Grid.Column="0" x:Name="ResetButton"    Content="重置"     Margin="5" Width="80"  HorizontalAlignment="Center" Click="ResetButton_Click" Style="{DynamicResource SubButtonStyle}"/>
+            <Button Grid.Row="0" Grid.Column="1" x:Name="ClearButton"    Content="清空"     Margin="5" Width="80"  HorizontalAlignment="Center" Click="ClearButton_Click" Style="{DynamicResource SubButtonStyle}"/>
+            <Button Grid.Row="0" Grid.Column="2" x:Name="SaveButton"     Content="重命名"   Margin="5" Width="80"  HorizontalAlignment="Center" Click="RenameButton_Click" Style="{DynamicResource ExecuteButtonStyle}"/>
+            <Button Grid.Row="1" Grid.Column="2" x:Name="CheckDupButton" Content="文件查重" Margin="5" Width="80"  HorizontalAlignment="Center" Click="CheckDupButton_Click" Style="{DynamicResource ExecuteButtonStyle}"/>
         </Grid>
     </Grid>
 </Page>
