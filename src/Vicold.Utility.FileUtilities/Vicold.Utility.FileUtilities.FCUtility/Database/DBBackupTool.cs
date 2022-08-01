@@ -25,17 +25,26 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Database
         private static void DeleteOldBakFile()
         {
             var files = Directory.GetFiles(_backupPath);
+            if (files.Length < 7)
+            {
+                return;
+            }
+
             var now = DateTime.Now;
             foreach (var file in files)
             {
                 var fileName = Path.GetFileName(file);
                 if (fileName.StartsWith("data_bak_"))
                 {
-                    var fileTime = DateTime.ParseExact(fileName.Substring(9, 14), "yyyyMMddHHmmss", System.Globalization.CultureInfo.InvariantCulture);
-                    if (now.Subtract(fileTime).TotalDays > 7)
+                    try
                     {
-                        File.Delete(file);
+                        var fileTime = DateTime.ParseExact(fileName.Substring(9, 14), "yyyyMMddHHmmss", System.Globalization.CultureInfo.InvariantCulture);
+                        if (now.Subtract(fileTime).TotalDays > 7)
+                        {
+                            File.Delete(file);
+                        }
                     }
+                    catch { }
                 }
             }
         }
