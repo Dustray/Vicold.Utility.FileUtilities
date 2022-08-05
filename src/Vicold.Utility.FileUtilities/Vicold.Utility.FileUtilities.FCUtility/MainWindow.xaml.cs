@@ -43,9 +43,9 @@ namespace Vicold.Utility.FileUtilities.FCUtility
         /// <param name="sender"></param>
         /// <param name="e"></param>
 
-        private void SyncDBButton_Click(object sender, RoutedEventArgs e)
+        private async void SyncDBButton_Click(object sender, RoutedEventArgs e)
         {
-            _coreHandler.SyncDatabase();
+            await _coreHandler.SyncDatabase().ConfigureAwait(false);
             UpdateDbInfo();
         }
 
