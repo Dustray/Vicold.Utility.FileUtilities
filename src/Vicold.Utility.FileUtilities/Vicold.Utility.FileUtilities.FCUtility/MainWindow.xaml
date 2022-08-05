@@ -120,7 +120,8 @@
                 <Button x:Name="ClearButton"    Grid.Column="2" Content="清空" Width="50"  Margin="2"  Click="ClearButton_Click" Style="{DynamicResource ExplorerButtonStyle}"/>
             </Grid>
             <Border Grid.Row="1" Height="1" Background="#ccc" Margin="10 0"/>
-            <TextBox x:Name="LogText" Grid.Row="2" TextWrapping="Wrap" IsReadOnly="true" BorderThickness="0" Margin="5" VerticalScrollBarVisibility="Auto"/>
+            <TextBox x:Name="LogText" Grid.Row="2" TextWrapping="Wrap" IsReadOnly="true" BorderThickness="0" Margin="5" AcceptsReturn="True"
+                     VerticalScrollBarVisibility="Auto"/>
         </Grid>
     </Grid>
 </Window>

@@ -30,6 +30,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
             int resultIndex = 999;
             int index = 0;
             int maxHintIndex = PRE_STR_HINT.Length;
+
             foreach (char ascii in longStr)
             {
 
@@ -55,6 +56,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
                         if (hintIndex < resultIndex)
                         {
                             result = new string(code.ToArray());
+                            resultIndex = hintIndex;
                         }
 
                         code.Clear();
@@ -104,7 +106,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
         public static Dictionary<int, List<string>> GetDupCodesPathInFolderLoop(IList<string> folders)
         {
             // <code, <size, path[]>>
-            Dictionary<int, Dictionary<long, List<string>>> result = new Dictionary<int, Dictionary<long, List<string>>>();
+            var result = new Dictionary<int, Dictionary<long, List<string>>>();
             foreach (var folder in folders)
             {
                 Search(folder);
@@ -129,13 +131,20 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
                         }
 
                         var newCode = GetCodeFromLongStr(fileInfo.Name);
+                        if (newCode == "2860703")
+                        {
+
+                        }
                         if (newCode is { } && int.TryParse(newCode, out var code))
                         {
                             if (result.TryGetValue(code, out var sizeDict))
                             {
                                 if (sizeDict.TryGetValue(fileInfo.Length, out var pathList))
                                 {
-                                    pathList.Add(fileInfo.FullName);
+                                    if (pathList[0] != fileInfo.FullName)
+                                    {
+                                        pathList.Add(fileInfo.FullName);
+                                    }
                                 }
                                 else
                                 {
@@ -147,6 +156,9 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
                                 result[code] = new Dictionary<long, List<string>>() { { fileInfo.Length, new List<string>() { fileInfo.FullName } } };
                             }
                         }
+                    }else if (fsinfo is DirectoryInfo directoryInfo)
+                    {
+                        Search(fsinfo.FullName);
                     }
                 }
             }
