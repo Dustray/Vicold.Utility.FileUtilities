@@ -8,13 +8,18 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CodeSearchPage">
 
-    <StackPanel>
-
-        <Grid Height="40" HorizontalAlignment="Left">
-            <TextBlock Text="代码快速搜索" Margin="5" FontSize="16" VerticalAlignment="Center"/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="40"/>
+            <RowDefinition  Height="40"/>
+            <RowDefinition  Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0"  HorizontalAlignment="Left">
+            <TextBlock Text="代码快速查询" Margin="5" FontSize="16" VerticalAlignment="Center"/>
         </Grid>
 
-        <Grid Height="40">
+        <Grid Grid.Row="1" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="90"/>
@@ -23,5 +28,32 @@
             <Button Grid.Column="1" x:Name="FastSearchButton" Style="{DynamicResource ExecuteButtonStyle}" Content="搜索" Margin="5" Width="80" HorizontalAlignment="Right" Click="FastSearchButton_Click"/>
         </Grid>
 
-    </StackPanel>
+        <Border Grid.Row="2" Height="1" Background="#eee" Margin="5"/>
+        <Grid Grid.Row="3">
+            <Grid.RowDefinitions>
+                <RowDefinition  Height="40"/>
+                <RowDefinition  Height="40"/>
+                <RowDefinition  Height="40"/>
+                <RowDefinition  Height="auto" MinHeight="40"/>
+                <RowDefinition  Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="查询代码：" Margin="5" VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="0" Grid.Column="1" x:Name="SearchCodeText" Margin="5" VerticalAlignment="Center"/>
+            
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="查询结果：" Margin="5" VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" x:Name="SearchResultText" Margin="5" VerticalAlignment="Center"/>
+            
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="资源类型：" Margin="5" VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="2" Grid.Column="1" x:Name="SearchTypeText" Margin="5" VerticalAlignment="Center"/>
+
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="文件位置：" Margin="5" VerticalAlignment="Center"/>
+            <TextBlock Grid.Row="3" Grid.Column="1" x:Name="SearchPathText" Margin="5" VerticalAlignment="Center" TextWrapping="Wrap"/>
+            <Button Grid.Row="4" Grid.Column="1" x:Name="OpenPathButton" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right"
+                    Visibility="Collapsed" Click="OpenPathButton_Click" Content="打开文件" Style="{DynamicResource ExplorerButtonStyle}"  />
+        </Grid>
+    </Grid>
 </Page>

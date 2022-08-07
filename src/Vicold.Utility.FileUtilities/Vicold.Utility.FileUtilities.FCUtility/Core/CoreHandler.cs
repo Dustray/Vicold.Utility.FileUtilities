@@ -338,6 +338,11 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
                     }
                     else if (fsinfo is FileInfo fileInfo)
                     {
+                        if (!FilePathUtility.RENAME_EXT.Contains(fileInfo.Extension.ToLower()))
+                        {
+                            continue;
+                        }
+                        
                         var fileName = Path.GetFileNameWithoutExtension(fileInfo.FullName);
                         if (!IsRenamed(fileName)) // 是否已经重命名过
                         {

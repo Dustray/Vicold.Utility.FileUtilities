@@ -96,10 +96,10 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
             _logger.Log(this, "资源重命名开始");
 
             // 遍历SubPathText的每一行
-            var subPaths = PathText.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            var paths = GetPath();
             await Task.Run(() =>
             {
-                foreach (var path in subPaths)
+                foreach (var path in paths)
                 {
                     if (Directory.Exists(path))
                     {
@@ -124,7 +124,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
         {
             _logger.Log(this, "资源文件查重开始");
             // 遍历SubPathText的每一行
-            var paths = PathText.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            var paths = GetPath();
             await Task.Run(() =>
             {
                 if (paths is { })
@@ -142,6 +142,11 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
             });
 
             _logger.Log(this, "资源文件查重完成");
+        }
+
+        private string[] GetPath()
+        {
+            return PathText.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
         }
     }
 }

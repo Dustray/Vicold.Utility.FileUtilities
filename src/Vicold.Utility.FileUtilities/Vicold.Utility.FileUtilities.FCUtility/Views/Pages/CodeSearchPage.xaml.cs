@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
             _logger = logger;
         }
 
-        public string FuncTitle { get; } = "代码搜索";
+        public string FuncTitle { get; } = "代码查询";
 
         private async void FastSearchButton_Click(object sender, RoutedEventArgs e)
         {
@@ -46,31 +47,70 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
                 }
 
                 var codeStr = FilePathUtility.GetCodeFromLongStr(codeLong);
-                if (codeStr is { } && int.TryParse(codeStr, out var code))
+                Dispatcher.Invoke(() =>
                 {
-                    _logger.Log(this, $"查询代码：{codeStr}");
-                    var info = _coreHandler.DB.Search(code);
-                    if (info is { })
+                    if (codeStr is { } && int.TryParse(codeStr, out var code))
                     {
-                        _logger.Log(this, $"查找成功，类型：{TypeTypeInfo.GetTypeName(info.Type)}，级别：{LevelTypeInfo.GetLevelName(info.Level)}");
-                        if (info.FilePath is { })
+                        _logger.Log(this, $"查询代码：{codeStr}");
+                        SearchCodeText.Text = codeStr;
+                        var info = _coreHandler.DB.Search(code);
+                        if (info is { })
                         {
-                            _logger.Log(this, $"文件路径：{info.FilePath}");
+                            SearchResultText.Text = "查询成功";
+                            SearchTypeText.Text = $"{TypeTypeInfo.GetTypeName(info.Type)} - {LevelTypeInfo.GetLevelName(info.Level)}";
+                            //_logger.Log(this, $"查找成功，类型：{TypeTypeInfo.GetTypeName(info.Type)}，级别：{LevelTypeInfo.GetLevelName(info.Level)}");
+                            //_logger.Log(this, $"文件路径：{info.FilePath}");
+
+                            if (info.FilePath is { } && System.IO.File.Exists(info.FilePath))
+                            {
+                                OpenPathButton.Visibility = Visibility;
+                                SearchPathText.Text = info.FilePath;
+                            }
+                            else
+                            {
+                                OpenPathButton.Visibility = Visibility.Collapsed;
+                                SearchPathText.Text = "未查询到文件位置";
+                            }
+                        }
+                        else
+                        {
+                            SearchTypeText.Text = string.Empty;
+                            SearchResultText.Text = "没有搜索到结果";
+                            //_logger.Log(this, "没有搜索到结果");
                         }
                     }
                     else
                     {
-                        _logger.Log(this, "没有搜索到结果");
+                        SearchTypeText.Text = string.Empty;
+                        SearchCodeText.Text = string.Empty;
+                        SearchResultText.Text = "搜索内容不合法，无法检测到代码";
+                        //_logger.Log(this, "搜索内容不合法，无法检测到代码");
                     }
-                }
-                else
-                {
-                    _logger.Log(this, "搜索内容不合法，无法检测到代码");
-                }
+                });
             });
 
             FastSearchText.Focus();
             FastSearchText.SelectAll();
+        }
+
+        private void OpenPathButton_Click(object sender, RoutedEventArgs e)
+        {
+            var file = SearchPathText.Text;
+            if (System.IO.File.Exists(file))
+            {
+                var p = new Process();
+                p.StartInfo = new ProcessStartInfo(file)
+                {
+                    UseShellExecute = true
+                };
+                p.Start();
+            }
+            else
+            {
+                var error = $"文件路径：{file}不存在";
+                _logger.Log(this, error);
+                MessageBox.Show(error);
+            }
         }
     }
 }
