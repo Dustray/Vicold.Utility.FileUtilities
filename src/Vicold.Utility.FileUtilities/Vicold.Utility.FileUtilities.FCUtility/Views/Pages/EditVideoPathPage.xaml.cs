@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using Vicold.Utility.FileUtilities.FCUtility.Core;
+using Vicold.Utility.FileUtilities.FCUtility.Database.Entities;
 
 namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
 {
@@ -87,18 +89,9 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
                 return;
             }
 
-            if (!Directory.Exists(MainPathText.Text))
+            if (!TryCreateMainDirectory(MainPathText.Text))
             {
-                try
-                {
-                    Directory.CreateDirectory(MainPathText.Text);
-                    _logger.Log(this, "主资源路径不存在，已自动创建");
-                }
-                catch (DirectoryNotFoundException)
-                {
-                    System.Windows.MessageBox.Show("主资源路径不存在且无法创建，请检查路径是否合法。", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
+                return;
             }
 
             // 遍历SubPathText的每一行
@@ -121,6 +114,71 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
             _coreHandler.SaveConfig();
             _logger.Log(this, "路径保存成功");
             modified = false;
+        }
+
+        private bool TryCreateMainDirectory(string mainPath)
+        {
+            if (!Directory.Exists(mainPath))
+            {
+                try
+                {
+                    Directory.CreateDirectory(mainPath);
+                    _logger.Log(this, "主资源路径不存在，已自动创建");
+                }
+                catch (DirectoryNotFoundException)
+                {
+                    System.Windows.MessageBox.Show("主资源路径不存在且无法创建，请检查路径是否合法。", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
+                catch (IOException)
+                {
+                    System.Windows.MessageBox.Show("文件名、目录名或卷标语法不正确，请检查路径是否合法。", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private void InitMainPathButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!TryCreateMainDirectory(MainPathText.Text))
+            {
+                return;
+            }
+
+            for (var i = LevelTypeInfo.MinTypeIndex; i <= LevelTypeInfo.MaxTypeIndex; i++)
+            {
+                var level = LevelTypeInfo.GetType(i);
+
+                CreateDir(level, TypeType.Clean);
+                CreateDir(level, TypeType.CleanMask);
+                CreateDir(level, TypeType.Mosaic);
+            }
+
+            void CreateDir(LevelType levelName, TypeType typeName)
+            {
+                var dir = Path.Combine(MainPathText.Text, FileStrUtility.GetMainDirName(levelName, typeName));
+                if (!Directory.Exists(dir))
+                {
+                    Directory.CreateDirectory(dir);
+                }
+            }
+
+            _logger.Log(this, "初始化主资源路径完成。");
+            var re = System.Windows.MessageBox.Show("初始化主资源路径完成，是否打开路径。", "提示", MessageBoxButton.YesNo, MessageBoxImage.Information);
+            if (re == MessageBoxResult.Yes)
+            {
+                var p = new Process
+                {
+                    StartInfo = new ProcessStartInfo(MainPathText.Text)
+                    {
+                        UseShellExecute = true
+                    }
+                };
+                p.Start();
+            }
+
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LiteDB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -47,9 +48,13 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Database.Entities
 
     public enum TypeType
     {
+        [BsonField("Unknown")]
         Unknown = 0,
+        [BsonField("Clean")]
         Clean = 1,
+        [BsonField("MaskClean")]
         CleanMask = 2,
+        [BsonField("Mosaic")]
         Mosaic = 3,
     }
 

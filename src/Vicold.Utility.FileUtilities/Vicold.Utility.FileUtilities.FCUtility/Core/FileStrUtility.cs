@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vicold.Utility.FileUtilities.FCUtility.Database.Entities;
 
 namespace Vicold.Utility.FileUtilities.FCUtility.Core
 {
@@ -29,6 +30,11 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
                 return lines;
             }
             return null;
+        }
+
+        public static string GetMainDirName(LevelType levelName, TypeType typeName)
+        {
+            return $"{(int)typeName}{(int)levelName}-{typeName}-{levelName}";
         }
     }
 }

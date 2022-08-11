@@ -98,10 +98,12 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
             var file = SearchPathText.Text;
             if (System.IO.File.Exists(file))
             {
-                var p = new Process();
-                p.StartInfo = new ProcessStartInfo(file)
+                var p = new Process
                 {
-                    UseShellExecute = true
+                    StartInfo = new ProcessStartInfo(file)
+                    {
+                        UseShellExecute = true
+                    }
                 };
                 p.Start();
             }

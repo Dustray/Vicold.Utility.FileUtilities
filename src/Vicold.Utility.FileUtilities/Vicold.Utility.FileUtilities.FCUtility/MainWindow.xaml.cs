@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -50,6 +51,32 @@ namespace Vicold.Utility.FileUtilities.FCUtility
         }
 
         /// <summary>
+        /// 打开主目录
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OpenPathButton_Click(object sender, RoutedEventArgs e)
+        {
+            var mainPath = _coreHandler.GetConfig().MainPath;
+            if (mainPath is { } && Directory.Exists(mainPath))
+            {
+                var p = new Process
+                {
+                    StartInfo = new ProcessStartInfo(mainPath)
+                    {
+                        UseShellExecute = true
+                    }
+                };
+                p.Start();
+            }
+            else
+            {
+                MessageBox.Show("主目录不存在", "错误", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+
+        /// <summary>
         /// 更新数据库计数数据
         /// </summary>
         private void UpdateDbInfo()
@@ -60,7 +87,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility
                 var counts = _coreHandler.GetLevelAndTypeDataCount();
                 foreach (var count in counts)
                 {
-                    var countItem = new DBCountItem(count.Key, count.Value);
+                    var countItem = new DBCountItem(count);
                     DBCountPanel.Children.Add(countItem);
                 }
             });

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,14 +22,27 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Controls
     /// </summary>
     public partial class DBCountItem : UserControl
     {
-        public DBCountItem(string title, int count)
+        private DBCountItemVM _vm;
+        internal DBCountItem(DBCountItemVM vm)
         {
             InitializeComponent();
-            this.DataContext = new DBCountItemVM
+            _vm = vm;
+            this.DataContext = vm;
+        }
+
+        private void OpenButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_vm.Path is { } && _vm.IsEnable)
             {
-                Title = $"{title}: ",
-                Count = $" {count}"
-            };
+                var p = new Process
+                {
+                    StartInfo = new ProcessStartInfo(_vm.Path)
+                    {
+                        UseShellExecute = true
+                    }
+                };
+                p.Start();
+            }
         }
     }
 }

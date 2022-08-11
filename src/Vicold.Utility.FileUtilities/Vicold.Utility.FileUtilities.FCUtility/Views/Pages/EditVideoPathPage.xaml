@@ -19,13 +19,15 @@
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock Text="主资源文件仓库路径" Margin="5" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-            <Button Grid.Column="1" x:Name="MainPathButton" Content="浏览" Margin="5" Width="80" HorizontalAlignment="Right" Click="MainPathButton_Click" Style="{DynamicResource ExplorerButtonStyle}"/>
+            <Button Grid.Column="1" x:Name="InitMainPathButton" Content="初始化" Margin="5" Width="80" HorizontalAlignment="Right" Click="InitMainPathButton_Click" Style="{DynamicResource ExplorerButtonStyle}"/>
+            <Button Grid.Column="2" x:Name="MainPathButton" Content="浏览" Margin="5" Width="80" HorizontalAlignment="Right" Click="MainPathButton_Click" Style="{DynamicResource ExplorerButtonStyle}"/>
         </Grid>
 
-        <TextBox  Grid.Row="1"  x:Name="MainPathText" Width="auto" Margin="5" />
+        <TextBox  Grid.Row="1"  x:Name="MainPathText" Width="auto" Margin="5" VerticalContentAlignment="Center"/>
 
         <Grid  Grid.Row="2" >
             <Grid.ColumnDefinitions>

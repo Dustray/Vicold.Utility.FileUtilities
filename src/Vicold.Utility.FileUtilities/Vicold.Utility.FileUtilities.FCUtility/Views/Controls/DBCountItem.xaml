@@ -8,11 +8,15 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Height="25">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Text="{Binding Title}" HorizontalAlignment="Right" FontWeight="Bold" FontSize="14"/>
-        <TextBlock Text="{Binding Count}" Grid.Column="1" FontSize="14"/>
+        <TextBlock Text="{Binding Title}" HorizontalAlignment="Right" FontWeight="Bold" FontSize="14" VerticalAlignment="Center"/>
+        <TextBlock Text="{Binding Count}" Grid.Column="1" FontSize="14" VerticalAlignment="Center"/>
+        <Button Grid.Column="2"  FontFamily="Segoe Fluent Icons" Content="&#xE8B7;" Width="25" Background="#0000" Foreground="#3868ff"
+               FontSize="14" ToolTip="{Binding Path}" Visibility="{Binding Visibility }" IsEnabled="{Binding IsEnable}" BorderThickness="0"
+                Cursor="Hand" Click="OpenButton_Click"/>
     </Grid>
 </UserControl>

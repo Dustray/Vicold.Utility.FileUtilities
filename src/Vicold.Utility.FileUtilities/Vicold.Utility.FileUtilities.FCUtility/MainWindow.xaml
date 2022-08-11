@@ -9,7 +9,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="310" MinHeight="310"/>
+            <RowDefinition Height="auto" MinHeight="281"/>
             <RowDefinition Height="auto"/>
             <RowDefinition MinHeight="10"/>
         </Grid.RowDefinitions>
@@ -22,6 +22,14 @@
         </Grid.ColumnDefinitions>
         <Border Grid.ColumnSpan="5" Height="1" Background="#eee"/>
         <StackPanel Grid.Row="1" x:Name="NavButtonPanel" Grid.Column="0"  Orientation="Vertical" Background="#1347">
+            <Button Style="{DynamicResource ManagerButtonStyle}" Click="OpenPathButton_Click"
+                        ToolTip="打开主目录" Foreground="PaleVioletRed" HorizontalAlignment="Stretch" >
+                <StackPanel Orientation="Horizontal">
+                    <Border Width="3" />
+                    <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE838;"  VerticalAlignment="Center" FontSize="16" Margin="5 0 5 0" />
+                    <TextBlock Text="打开主目录" FontFamily="微软雅黑" Foreground="Black" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
             <Button Style="{DynamicResource ManagerButtonStyle}" Click="SyncDBButton_Click"
                         ToolTip="从视频文件目录同步（导入并更新）数据库" Foreground="Green" HorizontalAlignment="Stretch" >
                 <StackPanel Orientation="Horizontal">

@@ -45,9 +45,9 @@
             <TextBlock Text="链接过滤" Margin="5" FontSize="16" HorizontalAlignment="Left" VerticalAlignment="Center"/>
             <Button    Grid.Row="0" Grid.Column="1" x:Name="OpenFileButton" Content="浏览" Margin="5" Width="80" HorizontalAlignment="Right" Click="OpenFileButton_Click" Style="{DynamicResource ExplorerButtonStyle}"/>
             <TextBlock Grid.Row="1" Grid.Column="0" Text="目标文件路径：" VerticalAlignment="Center" Margin="5" Foreground="#555"/>
-            <TextBox   Grid.Row="1" Grid.Column="1" x:Name="InPathText"  Width="auto" Margin="5"/>
+            <TextBox   Grid.Row="1" Grid.Column="1" x:Name="InPathText"  Width="auto" Margin="5" VerticalContentAlignment="Center"/>
             <TextBlock Grid.Row="2" Grid.Column="0" Text="保存文件路径：" VerticalAlignment="Center" Margin="5" Foreground="#555"/>
-            <TextBox   Grid.Row="2" Grid.Column="1" x:Name="OutPathText" Width="auto" Margin="5"/>
+            <TextBox   Grid.Row="2" Grid.Column="1" x:Name="OutPathText" Width="auto" Margin="5" VerticalContentAlignment="Center"/>
         </Grid>
 
         <TextBox Grid.Row="3"  x:Name="BeforeText" Width="auto" Margin="5" TextWrapping="Wrap" AcceptsReturn="True"/>

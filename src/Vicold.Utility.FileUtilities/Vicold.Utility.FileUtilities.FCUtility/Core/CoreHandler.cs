@@ -9,6 +9,7 @@ using Vicold.Utility.FileUtilities.FCUtility.Configuration;
 using Vicold.Utility.FileUtilities.FCUtility.Configuration.Entities;
 using Vicold.Utility.FileUtilities.FCUtility.Database;
 using Vicold.Utility.FileUtilities.FCUtility.Database.Entities;
+using Vicold.Utility.FileUtilities.FCUtility.Views.ViewModels;
 
 namespace Vicold.Utility.FileUtilities.FCUtility.Core
 {
@@ -47,9 +48,11 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
         {
             _configDriver.Save();
         }
-        public Dictionary<string, int> GetLevelAndTypeDataCount()
+        public List<DBCountItemVM> GetLevelAndTypeDataCount()
         {
-            var countResult = new Dictionary<string, int>();
+            var config = _configDriver.GetConfig();
+            var mainPath = config.MainPath ?? string.Empty;
+            var countResult = new List<DBCountItemVM>();
 
             Count(TypeType.Clean);
             Count(TypeType.CleanMask);
@@ -58,22 +61,22 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
             var unknownCount = _dBDriver.Count(LevelType.Unset, TypeType.Unknown);
             if (unknownCount != 0)
             {
-                countResult.Add($"未设置", unknownCount);
+                countResult.Add(new DBCountItemVM($"未设置", unknownCount));
             }
 
             var all = GetAllDataCount();
             var otherCount = all;
             foreach (var v in countResult)
             {
-                otherCount -= v.Value;
+                otherCount -= v.Count;
             }
 
             if (otherCount != 0)
             {
-                countResult.Add($"其他", otherCount);
+                countResult.Add(new DBCountItemVM($"其他", otherCount));
             }
 
-            countResult.Add($"总和", all);
+            countResult.Add(new DBCountItemVM($"总和", all));
 
             void Count(TypeType type)
             {
@@ -84,7 +87,8 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
                     var count = _dBDriver.Count(level, type);
                     if (count != 0)
                     {
-                        countResult.Add($"{TypeTypeInfo.GetTypeName(type)}-{level}", count);
+                        var dir = Path.Combine(mainPath, FileStrUtility.GetMainDirName(level, type));
+                        countResult.Add(new DBCountItemVM($"{TypeTypeInfo.GetTypeName(type)}-{level}", count, dir));
                     }
                 }
             }
@@ -215,7 +219,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
             var config = _configDriver.GetConfig();
             if (config.MainPath is { })
             {
-                var dir = Path.Combine(config.MainPath, $"{typeName}-{levelName}");
+                var dir = Path.Combine(config.MainPath, FileStrUtility.GetMainDirName(levelName, typeName));
                 if (!Directory.Exists(dir))
                 {
                     return null;
@@ -342,7 +346,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
                         {
                             continue;
                         }
-                        
+
                         var fileName = Path.GetFileNameWithoutExtension(fileInfo.FullName);
                         if (!IsRenamed(fileName)) // 是否已经重命名过
                         {
