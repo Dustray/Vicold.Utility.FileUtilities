@@ -51,9 +51,9 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
                 {
                     if (codeStr is { } && int.TryParse(codeStr, out var code))
                     {
-                        _logger.Log(this, $"查询代码：{codeStr}");
                         SearchCodeText.Text = codeStr;
                         var info = _coreHandler.DB.Search(code);
+                        _logger.Log(this, $"查询代码：{codeStr}{(info is { } ? "  查询成功" : string.Empty)}");
                         if (info is { })
                         {
                             SearchResultText.Text = "查询成功";
@@ -75,6 +75,8 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
                         else
                         {
                             SearchTypeText.Text = string.Empty;
+                            SearchPathText.Text = string.Empty;
+                            OpenPathButton.Visibility = Visibility.Collapsed;
                             SearchResultText.Text = "没有搜索到结果";
                             //_logger.Log(this, "没有搜索到结果");
                         }
@@ -83,6 +85,8 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
                     {
                         SearchTypeText.Text = string.Empty;
                         SearchCodeText.Text = string.Empty;
+                        SearchPathText.Text = string.Empty;
+                        OpenPathButton.Visibility = Visibility.Collapsed;
                         SearchResultText.Text = "搜索内容不合法，无法检测到代码";
                         //_logger.Log(this, "搜索内容不合法，无法检测到代码");
                     }
