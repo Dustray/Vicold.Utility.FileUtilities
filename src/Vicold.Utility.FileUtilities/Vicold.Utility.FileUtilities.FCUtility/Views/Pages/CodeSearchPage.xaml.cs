@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -63,12 +64,12 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
 
                             if (info.FilePath is { } && System.IO.File.Exists(info.FilePath))
                             {
-                                OpenPathButton.Visibility = Visibility;
+                                OpenFileButton.Visibility = OpenPathButton.Visibility = Visibility;
                                 SearchPathText.Text = info.FilePath;
                             }
                             else
                             {
-                                OpenPathButton.Visibility = Visibility.Collapsed;
+                                OpenFileButton.Visibility = OpenPathButton.Visibility = Visibility.Collapsed;
                                 SearchPathText.Text = "未查询到文件位置";
                             }
                         }
@@ -76,7 +77,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
                         {
                             SearchTypeText.Text = string.Empty;
                             SearchPathText.Text = string.Empty;
-                            OpenPathButton.Visibility = Visibility.Collapsed;
+                            OpenFileButton.Visibility = OpenPathButton.Visibility = Visibility.Collapsed;
                             SearchResultText.Text = "没有搜索到结果";
                             //_logger.Log(this, "没有搜索到结果");
                         }
@@ -86,7 +87,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
                         SearchTypeText.Text = string.Empty;
                         SearchCodeText.Text = string.Empty;
                         SearchPathText.Text = string.Empty;
-                        OpenPathButton.Visibility = Visibility.Collapsed;
+                        OpenFileButton.Visibility = OpenPathButton.Visibility = Visibility.Collapsed;
                         SearchResultText.Text = "搜索内容不合法，无法检测到代码";
                         //_logger.Log(this, "搜索内容不合法，无法检测到代码");
                     }
@@ -97,7 +98,25 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
             FastSearchText.SelectAll();
         }
 
-        private void OpenPathButton_Click(object sender, RoutedEventArgs e)
+
+        private void PasteAndSearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            string pastedText = Clipboard.GetText(TextDataFormat.Text);
+
+            if (!string.IsNullOrWhiteSpace(pastedText))
+            {
+                FastSearchText.Text = pastedText;
+                FastSearchButton_Click(sender, e);
+            }
+            else
+            {
+                var error = $"没有复制任何文本";
+                _logger.Log(this, error);
+                MessageBox.Show(error);
+            }
+        }
+
+        private void OpenFileButton_Click(object sender, RoutedEventArgs e)
         {
             var file = SearchPathText.Text;
             if (System.IO.File.Exists(file))
@@ -113,10 +132,34 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
             }
             else
             {
-                var error = $"文件路径：{file}不存在";
+                var error = $"文件：{file}不存在";
                 _logger.Log(this, error);
                 MessageBox.Show(error);
             }
         }
+
+        private void OpenPathButton_Click(object sender, RoutedEventArgs e)
+        {
+            var file = SearchPathText.Text;
+            var path = System.IO.Path.GetDirectoryName(file);
+            if (System.IO.Directory.Exists(path))
+            {
+                var p = new Process
+                {
+                    StartInfo = new ProcessStartInfo(path)
+                    {
+                        UseShellExecute = true
+                    }
+                };
+                p.Start();
+            }
+            else
+            {
+                var error = $"文件路径：{path}不存在";
+                _logger.Log(this, error);
+                MessageBox.Show(error);
+            }
+        }
+
     }
 }

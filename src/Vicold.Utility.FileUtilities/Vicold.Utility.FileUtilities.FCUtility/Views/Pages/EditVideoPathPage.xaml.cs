@@ -81,6 +81,33 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
             }
         }
 
+        private void ClearPathButton_Click(object sender, RoutedEventArgs e)
+        {
+            // 遍历SubPathText的每一行，判断如果不存在或者没有文件就删除
+            var subPaths = SubPathText.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+            var builder = new StringBuilder();
+            foreach (var path in subPaths)
+            {
+                if (Directory.Exists(path) && HasFC2File(path))
+                {
+                    builder.AppendLine(path);
+                }
+                else
+                {
+                    _logger.Log(this, $"清理无效子仓库路径：{path}");
+                }
+            }
+
+            SubPathText.Text = builder.ToString();
+
+            bool HasFC2File(string dir)
+            {
+                // 判断文件夹下有没有文件
+                var dirInfo = new DirectoryInfo(dir);
+                return dirInfo.GetFiles().Length != 0;
+            }
+        }
+
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrEmpty(MainPathText.Text))
@@ -180,5 +207,6 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
             }
 
         }
+
     }
 }

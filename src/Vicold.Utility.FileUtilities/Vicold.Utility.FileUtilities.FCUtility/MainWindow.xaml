@@ -72,11 +72,11 @@
                 </StackPanel>
             </Button>
             <Button x:Name="EditVideoPath" Style="{DynamicResource ManagerButtonStyle}" Click="EditVideoPath_Click"
-                        ToolTip="编辑视频路径" Foreground="OrangeRed" HorizontalAlignment="Stretch">
+                        ToolTip="编辑资源路径" Foreground="OrangeRed" HorizontalAlignment="Stretch">
                 <StackPanel Orientation="Horizontal">
                     <Border Width="3" Background="OrangeRed" Visibility="Hidden"/>
                     <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE104;"  VerticalAlignment="Center" FontSize="16" Margin="5 0 5 0" />
-                    <TextBlock Text="编辑视频路径" FontFamily="微软雅黑" Foreground="Black"  VerticalAlignment="Center"/>
+                    <TextBlock Text="编辑资源路径" FontFamily="微软雅黑" Foreground="Black"  VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
         </StackPanel>

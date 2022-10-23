@@ -35,7 +35,11 @@ namespace Vicold.Utility.FileUtilities.FCUtility
             _editVideoPathPage = new(_coreHandler, _logger);
             _renameFilePage = new(_coreHandler, _logger);
             //_coreHandler.SyncDatabase();
-            UpdateDbInfo();
+
+            System.Threading.Tasks.Task.Run(() =>
+            {
+                UpdateDbInfo();
+            });
             CodeSearch_Click(1, new RoutedEventArgs());
         }
         /// <summary>

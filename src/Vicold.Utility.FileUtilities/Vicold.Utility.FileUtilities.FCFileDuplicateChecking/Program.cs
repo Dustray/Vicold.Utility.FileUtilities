@@ -1,6 +1,21 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Collections.Generic;
 
+
+var ppo = "Z:\\WorldPlace\\115d9";
+
+// 遍历文件
+var files = Directory.GetFiles(ppo, "*.*", SearchOption.AllDirectories);
+
+foreach (var file in files)
+{
+    var newfile = file.Replace(".tiff", "");
+    // 重命名
+
+    File.Move(file, newfile);
+}
+
+
 Console.WriteLine("#Start Search");
 
 string sourceDir = @"O:\2127\新1.txt";
