@@ -93,6 +93,11 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
         /// <param name="e"></param>
         private async void RenameButton_Click(object sender, RoutedEventArgs e)
         {
+#if DEBUG
+            _logger.Log(this, "调试模式，不执行重命名操作");
+            return;
+#endif
+
             _logger.Log(this, "资源重命名开始");
 
             // 遍历SubPathText的每一行
