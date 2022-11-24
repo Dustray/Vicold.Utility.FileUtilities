@@ -146,7 +146,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
             {
                 var p = new Process
                 {
-                    StartInfo = new ProcessStartInfo(path)
+                    StartInfo = new ProcessStartInfo("Explorer.exe", $"/select,{file}" )
                     {
                         UseShellExecute = true
                     }

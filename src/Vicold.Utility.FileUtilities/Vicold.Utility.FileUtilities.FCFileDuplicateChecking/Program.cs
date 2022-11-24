@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 
 
-var ppo = "Z:\\WorldPlace\\115d9";
+var ppo = "O:\\夸克\\走进生活";
 
 // 遍历文件
 var files = Directory.GetFiles(ppo, "*.*", SearchOption.AllDirectories);
 
 foreach (var file in files)
 {
-    var newfile = file.Replace(".tiff", "");
+    var newfile = file.Replace(".ra删除r", ".rar");
     // 重命名
 
     File.Move(file, newfile);
@@ -17,6 +17,7 @@ foreach (var file in files)
 
 
 Console.WriteLine("#Start Search");
+return;
 
 string sourceDir = @"O:\2127\新1.txt";
 string saveDir = @"O:\2127\新1_filter.txt";
