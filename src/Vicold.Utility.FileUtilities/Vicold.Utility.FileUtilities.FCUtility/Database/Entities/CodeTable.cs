@@ -24,7 +24,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Database.Entities
         
         public DateTime UpdateTime { get; set; } = DateTime.Now;
 
-        
+        public MovieSeller? Seller { get; set; }
 
     }
 }
