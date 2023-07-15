@@ -10,7 +10,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Database.Entities
     [Serializable]
     public class MovieSeller
     {
-        public ObjectId Id { get; set; }
+        public ObjectId? Id { get; set; }
 
         public string? Name { get; set; }
 

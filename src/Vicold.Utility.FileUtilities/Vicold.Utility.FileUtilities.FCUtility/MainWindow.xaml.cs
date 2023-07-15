@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -17,19 +18,23 @@ namespace Vicold.Utility.FileUtilities.FCUtility
     public partial class MainWindow : Window
     {
         private CoreHandler _coreHandler;
-        private CodeSearchPage _CodeSearchPage;
+        private Logger _logger;
+
+        private CodeSearchPage _codeSearchPage;
+        private GlobalSearchPage _globalSearchPage;
         private FilterLinkFilePage _filterLinkFilePage;
         private ImportToDBPage _importToDBPage;
         private EditVideoPathPage _editVideoPathPage;
         private FileOperationPage _renameFilePage;
-        private Logger _logger;
 
-        public MainWindow()
+        internal MainWindow(CoreHandler coreHandle, Logger logger)
         {
             InitializeComponent();
-            _logger = new(LogThis);
-            _coreHandler = new CoreHandler(_logger);
-            _CodeSearchPage = new(_coreHandler, _logger);
+            _logger = logger;
+            _coreHandler = coreHandle;
+            _logger.Binding(LogThis);
+            _codeSearchPage = new(_coreHandler, _logger);
+            _globalSearchPage = new(_coreHandler, _logger);
             _filterLinkFilePage = new(_coreHandler, _logger);
             _importToDBPage = new(_coreHandler, _logger, UpdateDbInfo);
             _editVideoPathPage = new(_coreHandler, _logger);
@@ -41,7 +46,20 @@ namespace Vicold.Utility.FileUtilities.FCUtility
                 UpdateDbInfo();
             });
             CodeSearch_Click(1, new RoutedEventArgs());
+
+            BindingOrderCommands();
         }
+
+        private void BindingOrderCommands()
+        {
+            App.Current.OrderCommand.Register("CodeSearch", (obj) => { CodeSearch_Click(obj, new RoutedEventArgs()); });
+            App.Current.OrderCommand.Register("GlobalSearch", (obj) => { GlobalSearch_Click(obj, new RoutedEventArgs()); });
+            App.Current.OrderCommand.Register("FilterLinkFile", (obj) => { FilterLinkFile_Click(obj, new RoutedEventArgs()); });
+            App.Current.OrderCommand.Register("ImportToDB", (obj) => { ImportToDB_Click(obj, new RoutedEventArgs()); });
+            App.Current.OrderCommand.Register("EditVideoPath", (obj) => { EditVideoPath_Click(obj, new RoutedEventArgs()); });
+            App.Current.OrderCommand.Register("RenameFile", (obj) => { RenameFile_Click(obj, new RoutedEventArgs()); });
+        }
+
         /// <summary>
         /// 从视频文件目录同步（导入并更新）数据库
         /// </summary>
@@ -110,9 +128,16 @@ namespace Vicold.Utility.FileUtilities.FCUtility
 
         private void CodeSearch_Click(object sender, RoutedEventArgs e)
         {
-            FuncFrame.Navigate(_CodeSearchPage);
-            UpdateFuncTitle(_CodeSearchPage);
+            FuncFrame.Navigate(_codeSearchPage);
+            UpdateFuncTitle(_codeSearchPage);
             ChangeButtonFlag(CodeSearch);
+        }
+
+        private void GlobalSearch_Click(object sender, RoutedEventArgs e)
+        {
+            FuncFrame.Navigate(_globalSearchPage);
+            UpdateFuncTitle(_globalSearchPage);
+            ChangeButtonFlag(GlobalSearch);
         }
 
         private void FilterLinkFile_Click(object sender, RoutedEventArgs e)
@@ -144,6 +169,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility
             ChangeButtonFlag(RenameFile);
             _renameFilePage.Reflush();
         }
+
         #endregion
 
         private void UpdateFuncTitle(IFuncPage funcPage)
@@ -192,5 +218,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility
         {
             LogText.Clear();
         }
+
+
     }
 }

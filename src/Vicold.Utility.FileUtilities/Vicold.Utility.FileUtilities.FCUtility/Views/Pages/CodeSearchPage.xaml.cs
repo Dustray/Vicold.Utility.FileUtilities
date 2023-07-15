@@ -72,6 +72,8 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
                                 OpenFileButton.Visibility = OpenPathButton.Visibility = Visibility.Collapsed;
                                 SearchPathText.Text = "未查询到文件位置";
                             }
+
+                            LoadStarsButton(info);
                         }
                         else
                         {
@@ -91,11 +93,11 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
                         SearchResultText.Text = "搜索内容不合法，无法检测到代码";
                         //_logger.Log(this, "搜索内容不合法，无法检测到代码");
                     }
-                });
-            });
 
-            FastSearchText.Focus();
-            FastSearchText.SelectAll();
+                    FastSearchText.Focus();
+                    FastSearchText.SelectAll();
+                });
+            }).ConfigureAwait(false);
         }
 
 
@@ -146,7 +148,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
             {
                 var p = new Process
                 {
-                    StartInfo = new ProcessStartInfo("Explorer.exe", $"/select,{file}" )
+                    StartInfo = new ProcessStartInfo("Explorer.exe", $"/select,{file}")
                     {
                         UseShellExecute = true
                     }
@@ -160,6 +162,40 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
                 MessageBox.Show(error);
             }
         }
+
+        private void LoadStarsButton(CodeTable info)
+        {
+            //if (info.Stars is not{ })
+            //{
+            //    return;
+            //}
+
+            //foreach(var star in info.Stars)
+            //{
+            //    var names = star.GetNames();
+            //    if(names.Count==0)
+            //    {
+            //        continue;
+            //    }
+
+            //    var namesStr =string.Join(',', names);
+            //    var button = new Button
+            //    {
+            //        Content = namesStr,
+            //        Tag = star,
+            //        Padding = new Thickness(5),
+
+            //    };
+
+            //    button.Click += (s, e) =>
+            //    {
+            //       App.Current.OrderCommand.Handle("GlobalSearch",star);
+            //    };
+
+            //    MovieStarsPanel.Children.Add(button);
+            //}
+        }
+
 
     }
 }

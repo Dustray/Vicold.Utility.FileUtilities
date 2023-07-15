@@ -9,9 +9,18 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
 {
     internal class Logger
     {
-        private Action<string> _action;
+        private Action<string>? _action;
+
+        public Logger()
+        {
+        }
 
         public Logger(Action<string> action)
+        {
+            _action = action;
+        }
+
+        public void Binding(Action<string> action)
         {
             _action = action;
         }
@@ -23,7 +32,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Core
 
         public void Log(string head, string log)
         {
-            _action($"{head}：{log}");
+            _action?.Invoke($"{head}：{log}");
         }
     }
 }
