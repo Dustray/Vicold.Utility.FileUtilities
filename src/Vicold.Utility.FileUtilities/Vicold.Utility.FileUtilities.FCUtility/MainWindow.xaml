@@ -9,7 +9,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto" MinHeight="281"/>
+            <RowDefinition Height="auto" MinHeight="321"/>
             <RowDefinition Height="auto"/>
             <RowDefinition MinHeight="10"/>
         </Grid.RowDefinitions>
@@ -40,19 +40,19 @@
             </Button>
             <Border Height="1" Background="#ccc" Margin="10 0"/>
             <Button x:Name="CodeSearch" Style="{DynamicResource ManagerButtonStyle}" Click="CodeSearch_Click"
-                         ToolTip="代码查询" Foreground="Indigo" HorizontalAlignment="Stretch"  >
+                         ToolTip="搜索" Foreground="Indigo" HorizontalAlignment="Stretch"  >
                 <StackPanel Orientation="Horizontal">
                     <Border Width="3" Background="Indigo" Visibility="Hidden"/>
                     <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE11A;"  VerticalAlignment="Center" FontSize="16" Margin="5 0 5 0" />
-                    <TextBlock Text="代码查询" FontFamily="微软雅黑" Foreground="Black" VerticalAlignment="Center"/>
+                    <TextBlock Text="搜索" FontFamily="微软雅黑" Foreground="Black" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
-            <Button x:Name="GlobalSearch" Style="{DynamicResource ManagerButtonStyle}" Click="GlobalSearch_Click"
-                         ToolTip="全局综合查询" Foreground="Firebrick" HorizontalAlignment="Stretch"  >
+            <Button x:Name="EditSource" Style="{DynamicResource ManagerButtonStyle}" Click="EditSource_Click"
+                         ToolTip="编辑资源" Foreground="Firebrick" HorizontalAlignment="Stretch"  >
                 <StackPanel Orientation="Horizontal">
                     <Border Width="3" Background="Firebrick" Visibility="Hidden"/>
                     <TextBlock FontFamily="Segoe Fluent Icons" Text="&#xE11A;"  VerticalAlignment="Center" FontSize="16" Margin="5 0 5 0" />
-                    <TextBlock Text="全局综合查询" FontFamily="微软雅黑" Foreground="Black" VerticalAlignment="Center"/>
+                    <TextBlock Text="编辑资源" FontFamily="微软雅黑" Foreground="Black" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
             <Button x:Name="FilterLinkFile" Style="{DynamicResource ManagerButtonStyle}" Click="FilterLinkFile_Click"

@@ -26,6 +26,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility
         private ImportToDBPage _importToDBPage;
         private EditVideoPathPage _editVideoPathPage;
         private FileOperationPage _renameFilePage;
+        private BaseTabPage _searchTabPage;
 
         internal MainWindow(CoreHandler coreHandle, Logger logger)
         {
@@ -39,6 +40,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility
             _importToDBPage = new(_coreHandler, _logger, UpdateDbInfo);
             _editVideoPathPage = new(_coreHandler, _logger);
             _renameFilePage = new(_coreHandler, _logger);
+            _searchTabPage = new(new() { { "代码搜索", _codeSearchPage }, { "全局搜索", _globalSearchPage } });
             //_coreHandler.SyncDatabase();
 
             System.Threading.Tasks.Task.Run(() =>
@@ -53,7 +55,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility
         private void BindingOrderCommands()
         {
             App.Current.OrderCommand.Register("CodeSearch", (obj) => { CodeSearch_Click(obj, new RoutedEventArgs()); });
-            App.Current.OrderCommand.Register("GlobalSearch", (obj) => { GlobalSearch_Click(obj, new RoutedEventArgs()); });
+            App.Current.OrderCommand.Register("EditSource", (obj) => { EditSource_Click(obj, new RoutedEventArgs()); });
             App.Current.OrderCommand.Register("FilterLinkFile", (obj) => { FilterLinkFile_Click(obj, new RoutedEventArgs()); });
             App.Current.OrderCommand.Register("ImportToDB", (obj) => { ImportToDB_Click(obj, new RoutedEventArgs()); });
             App.Current.OrderCommand.Register("EditVideoPath", (obj) => { EditVideoPath_Click(obj, new RoutedEventArgs()); });
@@ -128,16 +130,17 @@ namespace Vicold.Utility.FileUtilities.FCUtility
 
         private void CodeSearch_Click(object sender, RoutedEventArgs e)
         {
-            FuncFrame.Navigate(_codeSearchPage);
-            UpdateFuncTitle(_codeSearchPage);
+            FuncFrame.Navigate(_searchTabPage);
+            UpdateFuncTitle(_searchTabPage);
             ChangeButtonFlag(CodeSearch);
+            _searchTabPage.Reflush();
         }
 
-        private void GlobalSearch_Click(object sender, RoutedEventArgs e)
+        private void EditSource_Click(object sender, RoutedEventArgs e)
         {
-            FuncFrame.Navigate(_globalSearchPage);
-            UpdateFuncTitle(_globalSearchPage);
-            ChangeButtonFlag(GlobalSearch);
+            //FuncFrame.Navigate(_globalSearchPage);
+            //UpdateFuncTitle(_globalSearchPage);
+            //ChangeButtonFlag(EditSource);
         }
 
         private void FilterLinkFile_Click(object sender, RoutedEventArgs e)

@@ -11,14 +11,10 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition  Height="40"/>
-            <RowDefinition  Height="40"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0"  HorizontalAlignment="Left">
-            <TextBlock Text="全局综合查询" Margin="5" FontSize="16" VerticalAlignment="Center"/>
-        </Grid>
 
-        <Grid Grid.Row="1" >
+        <Grid Grid.Row="0" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
@@ -32,7 +28,7 @@
         </Grid>
 
 
-        <DataGrid x:Name="ResultGrid" Grid.Row="2" Margin="5" BorderThickness="1" CanUserAddRows="False" CanUserDeleteRows="False">
+        <DataGrid x:Name="ResultGrid" Grid.Row="1" Margin="5" BorderThickness="1" CanUserAddRows="False" CanUserDeleteRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Code}" ClipboardContentBinding="{x:Null}" Header="代码"/>
                 <DataGridTextColumn Binding="{Binding Stars}" ClipboardContentBinding="{x:Null}" Header="演员"/>

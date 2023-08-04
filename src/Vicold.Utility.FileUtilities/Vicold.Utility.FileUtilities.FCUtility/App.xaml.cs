@@ -19,6 +19,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility
 
         public App() : base()
         {
+            LoadSource();
             PanelLogger = new Logger();
             DataCore = new CoreHandler(PanelLogger);
             Window = new MainWindow(DataCore, PanelLogger);
@@ -35,10 +36,17 @@ namespace Vicold.Utility.FileUtilities.FCUtility
         internal MainWindow Window { get; private set; }
         protected override void OnStartup(StartupEventArgs e)
         {
+
             this.MainWindow = Window;
             this.MainWindow.Show();
         }
 
-
+        private void LoadSource()
+        {
+            var dict = new ResourceDictionary();
+            dict.Source = new Uri("Styles/ButtonStyleDictionary.xaml", UriKind.Relative);
+            // 将资源字典添加到当前页面Resources中
+            this.Resources.MergedDictionaries.Add(dict);
+        }
     }
 }
