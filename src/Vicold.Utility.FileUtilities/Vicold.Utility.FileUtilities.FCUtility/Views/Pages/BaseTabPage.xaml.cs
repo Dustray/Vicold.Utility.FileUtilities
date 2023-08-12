@@ -25,9 +25,10 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
         private Dictionary<string, Button> _buttons;
         private string _selectedPage = string.Empty;
 
-        public BaseTabPage(Dictionary<string, Page> pages)
+        public BaseTabPage(string title, Dictionary<string, Page> pages)
         {
             InitializeComponent();
+            FuncTitle = title;
             _pages = pages;
             _buttons = new Dictionary<string, Button>();
 
@@ -63,7 +64,7 @@ namespace Vicold.Utility.FileUtilities.FCUtility.Views.Pages
             }
         }
 
-        public string FuncTitle { get; } = "搜索";
+        public string FuncTitle { get; } 
 
         public void Reflush()
         {

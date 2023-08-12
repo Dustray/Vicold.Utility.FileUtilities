@@ -20,13 +20,17 @@ namespace Vicold.Utility.FileUtilities.FCUtility
         private CoreHandler _coreHandler;
         private Logger _logger;
 
-        private CodeSearchPage _codeSearchPage;
-        private GlobalSearchPage _globalSearchPage;
         private FilterLinkFilePage _filterLinkFilePage;
         private ImportToDBPage _importToDBPage;
         private EditVideoPathPage _editVideoPathPage;
         private FileOperationPage _renameFilePage;
+
+        private CodeSearchPage _codeSearchPage;
+        private GlobalSearchPage _globalSearchPage;
         private BaseTabPage _searchTabPage;
+
+        private EditCodePage _editCodePage;
+        private BaseTabPage _editSourcePage;
 
         internal MainWindow(CoreHandler coreHandle, Logger logger)
         {
@@ -40,7 +44,9 @@ namespace Vicold.Utility.FileUtilities.FCUtility
             _importToDBPage = new(_coreHandler, _logger, UpdateDbInfo);
             _editVideoPathPage = new(_coreHandler, _logger);
             _renameFilePage = new(_coreHandler, _logger);
-            _searchTabPage = new(new() { { "代码搜索", _codeSearchPage }, { "全局搜索", _globalSearchPage } });
+            _editCodePage = new(_coreHandler, _logger);
+            _searchTabPage = new("搜索",new() { { "代码搜索", _codeSearchPage }, { "全局搜索", _globalSearchPage } });
+            _editSourcePage = new("编辑资源",new() { { "编辑代码", _editCodePage } });
             //_coreHandler.SyncDatabase();
 
             System.Threading.Tasks.Task.Run(() =>
@@ -138,9 +144,10 @@ namespace Vicold.Utility.FileUtilities.FCUtility
 
         private void EditSource_Click(object sender, RoutedEventArgs e)
         {
-            //FuncFrame.Navigate(_globalSearchPage);
-            //UpdateFuncTitle(_globalSearchPage);
-            //ChangeButtonFlag(EditSource);
+            FuncFrame.Navigate(_editSourcePage);
+            UpdateFuncTitle(_editSourcePage);
+            ChangeButtonFlag(EditSource);
+            _editSourcePage.Reflush();
         }
 
         private void FilterLinkFile_Click(object sender, RoutedEventArgs e)
